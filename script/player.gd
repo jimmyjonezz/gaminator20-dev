@@ -60,9 +60,11 @@ func _input(event):
 		if direction != 0:
 			move = false
 			$pivot/offset.position.x = 0
+			state_machine.travel("fade_out")
 			$animation.play("fade_out")
 			yield($animation, "animation_finished")
 			position.y = area_position.y
+			state_machine.travel("fade_in")
 			$animation.play("fade_in")
 			yield($animation, "animation_finished")
 			move = not move
