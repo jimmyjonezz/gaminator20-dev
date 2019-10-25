@@ -31,18 +31,19 @@ func shoot() -> void:
 		#emit_signal("shoot")
 		
 func die():
-	$atention.visible = false
+	$raycast.enabled = false
 	$timer.stop()
 	$collision.set_deferred("disabled", true)
 	$animation.play("die")
 	yield($animation, "animation_finished")
+	$dir_timer.stop()
 	_spawn_props()
-	queue_free()
+	#queue_free()
 	
 func _ready():
 	randomize()
 	$animation.seek(rand_range(0, 0.6))
-	$dir_timer.wait_time = rand_range(1, 6)
+	$dir_timer.wait_time = rand_range(1, 5)
 	$timer.start()
 	$dir_timer.start()
 	
@@ -50,7 +51,8 @@ func _physics_process(delta):
 	var target_dis = $raycast.is_colliding()
 	if target_dis:
 		$atention.visible = true
-		shoot()
+		if !save:
+			shoot()
 		shooting = true
 	else:
 		$atention.visible = false
@@ -89,7 +91,7 @@ func _on_dir_timer_timeout():
 			$pos.position.x = -7
 		else:
 			$pos.position.x = 7
-		$timer.wait_time = rand_range(1, 4)
+		$timer.wait_time = rand_range(1, 2)
 		
 	if $atention.visible:
 		_save()
