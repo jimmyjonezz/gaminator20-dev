@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://script/door.gd" type="Script" id=1]
+[ext_resource path="res://sprite/stuff.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 4, 8 )
+
+[node name="door" type="Area2D" groups=[
+"door",
+]]
+script = ExtResource( 1 )
+direction = 32
+
+[node name="collision" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="sprite" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -16 )
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 2 )
+vframes = 16
+hframes = 16
+frame = 32
+[connection signal="body_entered" from="." to="." method="_on_door_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_door_body_exited"]

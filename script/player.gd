@@ -1,0 +1,161 @@
+extends KinematicBody2D
+
+signal shoot()
+signal change_ammo()
+signal change_health()
+
+export var Bullet : PackedScene
+
+export (int) var speed = 2600
+export var look_direction = Vector2(1, 0)
+
+var direction setget set_dir
+
+var velocity = Vector2.ZERO
+var shooting = true as bool
+#var direction = 0
+var count = 4
+var area_position = Vector2.ZERO
+var teleports
+var state_machine
+var save = false as bool
+var move = true
+
+func set_dir(value : int):
+	if value != 0:
+		direction = value
+
+func _ready():
+	direction = 0
+	teleports = get_node("../teleport").get_children()
+	state_machine = $animtree.get("parameters/playback")
+	
+func knockback():
+	var knock = Vector2.ZERO
+	var new_vector = Vector2.ZERO
+	for body in $area2d.get_overlapping_bodies():
+		if body.is_in_group("enemy"):
+			knock = (transform.origin - body.transform.origin) * 1.6
+			new_vector = transform.origin + knock
+			$tween.interpolate_property(self, "position", transform.origin, new_vector, 0.1, $tween.TRANS_LINEAR, $tween.EASE_OUT_IN)
+			$tween.start()
+			emit_signal("change_health")
+
+func _physics_process(delta):
+	get_input(delta)
+	knockback()
+	
+func _input(event):
+	if event.is_action_pressed("ui_cancel"):
+		var new_pause_state = not get_tree().paused
+		get_tree().paused = new_pause_state
+	
+	if event.is_action_pressed("ui_accept"):
+		assert(get_tree().reload_current_scene() == OK)
+		
+	if event.is_action_pressed("enter"):
+		if direction != 0:
+			move = false
+			$pivot/offset.position.x = 0
+			$animation.play("fade_out")
+			yield($animation, "animation_finished")
+			position.y = area_position.y
+			$animation.play("fade_in")
+			yield($animation, "animation_finished")
+			move = not move
+			return
+		
+		if !save:
+			position.y -= 5
+			$sprite.self_modulate = Color("#393939")
+			$head.self_modulate = Color("#393939")
+			$area2d/collisionarea.set_deferred("disabled", true)
+			#$collision.set_deferred("disabled", true)
+			save = true
+			state_machine.travel("idle")
+			set_physics_process(false)
+		elif save:
+			position.y += 5
+			$sprite.self_modulate = Color("#ffffff")
+			$head.self_modulate = Color("#ffffff")
+			$area2d/collisionarea.set_deferred("disabled", false)
+			#$collision.set_deferred("disabled", false)
+			save = false
+			set_physics_process(true)
+
+func get_input(delta):
+	if Input.is_action_just_pressed("fire"):
+		if shooting:
+			shoot()
+		
+	if Input.is_action_pressed("ui_right") and move:
+		velocity.x += speed
+		$sprite.flip_h = false
+		$head.flip_h = false
+		$pivot/offset.position.x = 60
+		$pos.position.x = 7
+		look_direction = Vector2(1, 0)
+	elif Input.is_action_pressed("ui_left") and move:
+		velocity.x -= speed
+		$sprite.flip_h = true
+		$head.flip_h = true
+		$pivot/offset.position.x = 60
+		$pos.position.x = -7
+		look_direction = Vector2(-1, 0)
+	else:
+		velocity = Vector2.ZERO
+		#state_machine.travel("idle")
+	
+	if velocity.length() == 0:
+		$animation.play("idle")
+	
+	if velocity.length() > 0:
+		#state_machine.travel("run")
+		$animation.play("run")
+		#$audio.play()
+		
+	#emit_signal("moved")
+		
+	velocity = move_and_slide(velocity * delta)
+
+func shoot() -> void:
+	if count > 0:
+		shooting = false
+		$timer.start()
+		var bullet = Bullet.instance()
+		get_parent().add_child(bullet)
+		
+		var rot = get_rotation()
+		if $sprite.flip_h:
+			rot += PI
+		
+		bullet.start($pos.global_position, rot)
+		emit_signal("shoot")
+
+func _on_timer_timeout():
+	shooting = true
+
+func _on_area2d_area_entered(area):
+	if area in teleports:
+		area_position.y = area.position.y
+	
+	elif area.is_in_group("props") and count < 4:
+		count = 4
+		emit_signal("change_ammo")
+		area.die()
+	
+	if area.is_in_group("bullet"):
+		emit_signal("change_health")
+		area.die()
+		var knock = (transform.origin - area.transform.origin) * 2
+		var new_vector = transform.origin + knock
+		$tween.interpolate_property(self, "position:x", transform.origin.x, new_vector.x, 0.1, $tween.TRANS_LINEAR, $tween.EASE_OUT_IN)
+		$tween.start()
+
+func _on_ui_shooting(signal_state, value):
+	if value:
+		count = signal_state
+
+func _on_area2d_area_exited(area):
+	if area in teleports:
+		direction = 0

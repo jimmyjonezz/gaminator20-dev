@@ -1,0 +1,229 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://script/player.gd" type="Script" id=1]
+[ext_resource path="res://sprite/stuff.png" type="Texture" id=2]
+[ext_resource path="res://scene/bullet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://script/pivot.gd" type="Script" id=4]
+[ext_resource path="res://sound/sfx_movement_footstepsloop4_fast.wav" type="AudioStream" id=5]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 3.0
+height = 6.0
+
+[sub_resource type="Animation" id=2]
+resource_name = "fade_in"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("head:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "fade_out"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("head:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 2, 3 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("head:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, -2 ), Vector2( 0, -3 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 4, 5, 6, 2 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("head:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, -3 ), Vector2( 0, -3 ), Vector2( 0, -2 ) ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "run"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=8]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=9]
+
+[sub_resource type="AnimationNodeStateMachine" id=10]
+states/idle/node = SubResource( 6 )
+states/idle/position = Vector2( 230, 46 )
+states/run/node = SubResource( 7 )
+states/run/position = Vector2( 230, 171 )
+transitions = [ "idle", "run", SubResource( 8 ), "run", "idle", SubResource( 9 ) ]
+start_node = "idle"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=11]
+
+[sub_resource type="CapsuleShape2D" id=12]
+radius = 4.0
+height = 6.0
+
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 3, 1 )
+
+[node name="player" type="KinematicBody2D"]
+collision_mask = 15
+script = ExtResource( 1 )
+Bullet = ExtResource( 3 )
+
+[node name="sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+vframes = 16
+hframes = 16
+frame = 2
+
+[node name="head" type="Sprite" parent="."]
+position = Vector2( 0, -2 )
+texture = ExtResource( 2 )
+vframes = 16
+hframes = 16
+frame = 7
+
+[node name="collision" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource( 1 )
+
+[node name="pos" type="Position2D" parent="."]
+position = Vector2( 7, 2 )
+
+[node name="timer" type="Timer" parent="."]
+wait_time = 0.7
+one_shot = true
+
+[node name="pivot" type="Position2D" parent="."]
+script = ExtResource( 4 )
+
+[node name="offset" type="Position2D" parent="pivot"]
+position = Vector2( 20, 0 )
+
+[node name="camera" type="Camera2D" parent="pivot/offset"]
+current = true
+zoom = Vector2( 0.3, 0.3 )
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+drag_margin_left = 0.1
+drag_margin_top = 0.1
+drag_margin_right = 0.1
+drag_margin_bottom = 0.1
+editor_draw_drag_margin = true
+
+[node name="animation" type="AnimationPlayer" parent="."]
+autoplay = "idle"
+anims/fade_in = SubResource( 2 )
+anims/fade_out = SubResource( 3 )
+anims/idle = SubResource( 4 )
+anims/run = SubResource( 5 )
+
+[node name="animtree" type="AnimationTree" parent="."]
+tree_root = SubResource( 10 )
+anim_player = NodePath("../animation")
+active = true
+process_mode = 0
+parameters/playback = SubResource( 11 )
+
+[node name="area2d" type="Area2D" parent="."]
+collision_mask = 5
+
+[node name="collisionarea" type="CollisionShape2D" parent="area2d"]
+visible = false
+shape = SubResource( 12 )
+
+[node name="audio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+
+[node name="tween" type="Tween" parent="."]
+
+[node name="colhead" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 0, -4 )
+shape = SubResource( 13 )
+[connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="area2d" to="." method="_on_area2d_area_entered"]
+[connection signal="area_exited" from="area2d" to="." method="_on_area2d_area_exited"]
