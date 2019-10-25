@@ -156,10 +156,10 @@ Bullet = ExtResource( 3 )
 texture = ExtResource( 2 )
 vframes = 16
 hframes = 16
-frame = 2
+frame = 3
 
 [node name="head" type="Sprite" parent="."]
-position = Vector2( 0, -2 )
+position = Vector2( 0, -3 )
 texture = ExtResource( 2 )
 vframes = 16
 hframes = 16
