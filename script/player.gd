@@ -3,6 +3,7 @@ extends KinematicBody2D
 signal shoot()
 signal change_ammo()
 signal change_health()
+var nums = [7, 8, 9]
 
 export var Bullet : PackedScene
 
@@ -26,6 +27,8 @@ func set_dir(value : int):
 		direction = value
 
 func _ready():
+	randomize()
+	$head.frame = nums[randi() % nums.size()]
 	direction = 0
 	teleports = get_node("../teleport").get_children()
 	state_machine = $animtree.get("parameters/playback")
