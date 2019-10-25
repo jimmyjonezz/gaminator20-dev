@@ -4,6 +4,7 @@ export var Ammo : PackedScene
 export var Bullet: PackedScene
 var shooting = false
 var save = false
+var nums = [true, false]
 
 onready var props = get_node("../../props")
 
@@ -43,6 +44,9 @@ func die():
 	
 func _ready():
 	randomize()
+	var dir = nums[randi() % nums.size()]
+	if dir:
+		_rotation()
 	#случайное значение шкалы времени для анимации idle
 	$animation.seek(rand_range(0, 0.6))
 	#время задержки при смене направления flip_h
@@ -94,17 +98,21 @@ func _on_timer_timeout():
 	if $atention.visible:
 		_save()
 
+func _rotation():
+	#enemy смотрит то в одну, то в другую сторону
+	$sprite.flip_h = not $sprite.flip_h
+	$raycast.rotation += PI
+
+	#$pos для спавна пули - стрельба
+	if $pos.position.x == 7:
+		$pos.position.x = -7
+	else:
+		$pos.position.x = 7
+
 func _on_dir_timer_timeout():
 	#если не видим игрока, то смотрим в другую сторону
 	if not $atention.visible:
-		$sprite.flip_h = not $sprite.flip_h
-		$raycast.rotation += PI
-	
-		#$pos для спавна пули - стрельба
-		if $pos.position.x == 7:
-			$pos.position.x = -7
-		else:
-			$pos.position.x = 7
+		_rotation()
 		
 		#вносим разноообрази во время, за которое enemy 
 		#поворачивается в другую сторону
