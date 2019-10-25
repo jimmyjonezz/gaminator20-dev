@@ -37,7 +37,7 @@ func knockback():
 		if body.is_in_group("enemy"):
 			knock = (transform.origin - body.transform.origin) * 1.6
 			new_vector = transform.origin + knock
-			$tween.interpolate_property(self, "position", transform.origin, new_vector, 0.1, $tween.TRANS_LINEAR, $tween.EASE_OUT_IN)
+			$tween.interpolate_property(self, "position:x", transform.origin.x, new_vector.x, 0.1, $tween.TRANS_LINEAR, $tween.EASE_OUT_IN)
 			$tween.start()
 			emit_signal("change_health")
 
