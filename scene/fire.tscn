@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://sprite/light.png" type="Texture" id=1]
 [ext_resource path="res://sprite/tiles.png" type="Texture" id=2]
+[ext_resource path="res://script/fire.gd" type="Script" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "lighting"
@@ -33,6 +34,7 @@ tracks/1/keys = {
 }
 
 [node name="fire" type="Node2D"]
+script = ExtResource( 3 )
 
 [node name="sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
@@ -51,3 +53,7 @@ mode = 2
 [node name="animation" type="AnimationPlayer" parent="."]
 autoplay = "lighting"
 anims/lighting = SubResource( 1 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+[connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

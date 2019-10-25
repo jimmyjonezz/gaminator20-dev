@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://script/player.gd" type="Script" id=1]
 [ext_resource path="res://sprite/stuff.png" type="Texture" id=2]
@@ -120,6 +120,12 @@ tracks/1/keys = {
 "values": [ Vector2( 0, -3 ), Vector2( 0, -3 ), Vector2( 0, -2 ) ]
 }
 
+[sub_resource type="AnimationNodeAnimation" id=14]
+animation = "fade_in"
+
+[sub_resource type="AnimationNodeAnimation" id=15]
+animation = "fade_out"
+
 [sub_resource type="AnimationNodeAnimation" id=6]
 animation = "idle"
 
@@ -130,12 +136,28 @@ animation = "run"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=9]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=19]
+switch_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=20]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=21]
+switch_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=22]
+switch_mode = 2
+
 [sub_resource type="AnimationNodeStateMachine" id=10]
+states/fade_in/node = SubResource( 14 )
+states/fade_in/position = Vector2( 70, 41 )
+states/fade_out/node = SubResource( 15 )
+states/fade_out/position = Vector2( 433, 46 )
 states/idle/node = SubResource( 6 )
 states/idle/position = Vector2( 230, 46 )
 states/run/node = SubResource( 7 )
 states/run/position = Vector2( 230, 171 )
-transitions = [ "idle", "run", SubResource( 8 ), "run", "idle", SubResource( 9 ) ]
+transitions = [ "idle", "run", SubResource( 8 ), "run", "idle", SubResource( 9 ), "idle", "fade_out", SubResource( 19 ), "fade_out", "idle", SubResource( 20 ), "idle", "fade_in", SubResource( 21 ), "fade_in", "idle", SubResource( 22 ) ]
 start_node = "idle"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=11]
