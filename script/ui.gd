@@ -14,6 +14,12 @@ func _input(event):
 		var new_pause_state = not get_tree().paused
 		get_tree().paused = new_pause_state
 		$esc.visible = new_pause_state
+		
+	if event.is_action_pressed("fullscreen"):
+		OS.window_fullscreen = !OS.window_fullscreen
+		
+	if event.is_action_pressed("hromatic"):
+		$shader.visible = not $shader.visible
 	
 #общая функция для анимации шкалы задержки выстрела, статус баров жизни и патрон
 func animate_value(object, start, end, tic):

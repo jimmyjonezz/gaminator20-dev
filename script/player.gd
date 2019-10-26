@@ -7,7 +7,7 @@ var nums = [7, 8, 9]
 
 export var Bullet : PackedScene
 
-export (int) var speed = 2600
+export (int) var speed = 3600
 export var look_direction = Vector2(1, 0)
 
 var direction setget set_dir

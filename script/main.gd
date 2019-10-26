@@ -17,8 +17,4 @@ func set_camera_limits() -> void:
 	camera.limit_bottom = map_limits.end.y * map_cellsize.y
 	
 func _input(event):
-	if event.is_action_pressed("fullscreen"):
-		OS.window_fullscreen = !OS.window_fullscreen
-		
-	if event.is_action_pressed("hromatic"):
-		$ui/shader.visible = not $ui/shader.visible
+	pass
