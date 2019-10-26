@@ -44,6 +44,7 @@ func die():
 	
 func _ready():
 	randomize()
+	#случайное направление влево или вправо
 	var dir = nums[randi() % nums.size()]
 	if dir:
 		_rotation()
