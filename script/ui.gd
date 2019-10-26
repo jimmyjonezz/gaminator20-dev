@@ -6,6 +6,15 @@ var ammo_count = 4
 var count = 4
 var health_count = 5
 
+func _ready():
+	$esc.visible = false
+	
+func _input(event):
+	if event.is_action_pressed("ui_cancel"):
+		var new_pause_state = not get_tree().paused
+		get_tree().paused = new_pause_state
+		$esc.visible = new_pause_state
+	
 #общая функция для анимации шкалы задержки выстрела, статус баров жизни и патрон
 func animate_value(object, start, end, tic):
 	$tween.interpolate_property(object, "value", start, end, tic, $tween.EASE_IN, $tween.EASE_OUT)

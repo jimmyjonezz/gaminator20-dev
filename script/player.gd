@@ -49,9 +49,6 @@ func _physics_process(delta):
 	knockback()
 	
 func _input(event):
-	if event.is_action_pressed("ui_cancel"):
-		var new_pause_state = not get_tree().paused
-		get_tree().paused = new_pause_state
 	
 	if event.is_action_pressed("ui_accept"):
 		assert(get_tree().reload_current_scene() == OK)

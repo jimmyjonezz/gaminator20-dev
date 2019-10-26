@@ -20,6 +20,7 @@ atlas = ExtResource( 1 )
 region = Rect2( 0, 20, 16, 4 )
 
 [node name="ui" type="CanvasLayer"]
+pause_mode = 2
 scale = Vector2( 4, 4 )
 transform = Transform2D( 4, 0, 0, 4, 0, 0 )
 script = ExtResource( 2 )
@@ -28,12 +29,12 @@ __meta__ = {
 }
 
 [node name="margin" type="Control" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
+pause_mode = 1
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -476.0
+margin_right = 476.0
+margin_bottom = 532.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -120,4 +121,18 @@ __meta__ = {
 [node name="blank" type="Control" parent="margin/hbox_right"]
 margin_bottom = 16.0
 
+[node name="esc" type="Control" parent="."]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="esc"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.533333 )
+
 [node name="tween" type="Tween" parent="."]
+pause_mode = 1
