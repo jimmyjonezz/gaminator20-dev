@@ -3,7 +3,7 @@ extends KinematicBody2D
 signal shoot()
 signal change_ammo()
 signal change_health()
-var nums = [7, 8, 9]
+var nums = [7, 8, 9, 10]
 
 export var Bullet : PackedScene
 
