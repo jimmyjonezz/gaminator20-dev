@@ -120,53 +120,53 @@ tracks/1/keys = {
 "values": [ Vector2( 0, -3 ), Vector2( 0, -3 ), Vector2( 0, -2 ) ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=14]
+[sub_resource type="AnimationNodeAnimation" id=6]
 animation = "fade_in"
 
-[sub_resource type="AnimationNodeAnimation" id=15]
+[sub_resource type="AnimationNodeAnimation" id=7]
 animation = "fade_out"
 
-[sub_resource type="AnimationNodeAnimation" id=6]
+[sub_resource type="AnimationNodeAnimation" id=8]
 animation = "idle"
 
-[sub_resource type="AnimationNodeAnimation" id=7]
+[sub_resource type="AnimationNodeAnimation" id=9]
 animation = "run"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=8]
+[sub_resource type="AnimationNodeStateMachineTransition" id=10]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=9]
+[sub_resource type="AnimationNodeStateMachineTransition" id=11]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=19]
+[sub_resource type="AnimationNodeStateMachineTransition" id=12]
 switch_mode = 1
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=20]
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
 switch_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=21]
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
 switch_mode = 1
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=22]
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
 switch_mode = 2
 
-[sub_resource type="AnimationNodeStateMachine" id=10]
-states/fade_in/node = SubResource( 14 )
+[sub_resource type="AnimationNodeStateMachine" id=16]
+states/fade_in/node = SubResource( 6 )
 states/fade_in/position = Vector2( 70, 41 )
-states/fade_out/node = SubResource( 15 )
+states/fade_out/node = SubResource( 7 )
 states/fade_out/position = Vector2( 433, 46 )
-states/idle/node = SubResource( 6 )
+states/idle/node = SubResource( 8 )
 states/idle/position = Vector2( 230, 46 )
-states/run/node = SubResource( 7 )
+states/run/node = SubResource( 9 )
 states/run/position = Vector2( 230, 171 )
-transitions = [ "idle", "run", SubResource( 8 ), "run", "idle", SubResource( 9 ), "idle", "fade_out", SubResource( 19 ), "fade_out", "idle", SubResource( 20 ), "idle", "fade_in", SubResource( 21 ), "fade_in", "idle", SubResource( 22 ) ]
+transitions = [ "idle", "run", SubResource( 10 ), "run", "idle", SubResource( 11 ), "idle", "fade_out", SubResource( 12 ), "fade_out", "idle", SubResource( 13 ), "idle", "fade_in", SubResource( 14 ), "fade_in", "idle", SubResource( 15 ) ]
 start_node = "idle"
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=11]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=17]
 
-[sub_resource type="CapsuleShape2D" id=12]
+[sub_resource type="CapsuleShape2D" id=18]
 radius = 4.0
 height = 6.0
 
-[sub_resource type="RectangleShape2D" id=13]
+[sub_resource type="RectangleShape2D" id=19]
 extents = Vector2( 3, 1 )
 
 [node name="player" type="KinematicBody2D"]
@@ -224,18 +224,18 @@ anims/idle = SubResource( 4 )
 anims/run = SubResource( 5 )
 
 [node name="animtree" type="AnimationTree" parent="."]
-tree_root = SubResource( 10 )
+tree_root = SubResource( 16 )
 anim_player = NodePath("../animation")
 active = true
 process_mode = 0
-parameters/playback = SubResource( 11 )
+parameters/playback = SubResource( 17 )
 
 [node name="area2d" type="Area2D" parent="."]
 collision_mask = 5
 
 [node name="collisionarea" type="CollisionShape2D" parent="area2d"]
 visible = false
-shape = SubResource( 12 )
+shape = SubResource( 18 )
 
 [node name="audio" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 5 )
@@ -245,7 +245,7 @@ stream = ExtResource( 5 )
 [node name="colhead" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2( 0, -4 )
-shape = SubResource( 13 )
+shape = SubResource( 19 )
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="area2d" to="." method="_on_area2d_area_entered"]
 [connection signal="area_exited" from="area2d" to="." method="_on_area2d_area_exited"]

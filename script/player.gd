@@ -7,7 +7,7 @@ var nums = [7, 8, 9]
 
 export var Bullet : PackedScene
 
-export (int) var speed = 2600
+export (int) var speed = 3600
 export var look_direction = Vector2(1, 0)
 
 var direction setget set_dir
@@ -49,9 +49,6 @@ func _physics_process(delta):
 	knockback()
 	
 func _input(event):
-	if event.is_action_pressed("ui_cancel"):
-		var new_pause_state = not get_tree().paused
-		get_tree().paused = new_pause_state
 	
 	if event.is_action_pressed("ui_accept"):
 		assert(get_tree().reload_current_scene() == OK)
