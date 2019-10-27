@@ -5,6 +5,7 @@ export var Bullet: PackedScene
 var shooting = false
 var save = false
 var nums = [true, false]
+var died = false
 
 onready var props = get_node("../../props")
 
@@ -32,6 +33,7 @@ func shoot() -> void:
 		#emit_signal("shoot")
 		
 func die():
+	died = true
 	$raycast.enabled = false
 	$timer.stop()
 	$collision.set_deferred("disabled", true)
@@ -125,4 +127,7 @@ func _on_VisibilityNotifier2D_screen_entered():
 	set_physics_process(true)
 
 func _on_VisibilityNotifier2D_screen_exited():
+	if died:
+		queue_free()
+	
 	set_physics_process(false)
