@@ -1,6 +1,7 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://sprite/key1.png" type="Texture" id=1]
+[ext_resource path="res://script/key.gd" type="Script" id=2]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
@@ -74,7 +75,20 @@ animations = [ {
 "speed": 10.0
 } ]
 
-[node name="key1" type="AnimatedSprite"]
+[sub_resource type="CircleShape2D" id=18]
+radius = 5.0
+
+[node name="key" type="Area2D" groups=[
+"key",
+]]
+collision_layer = 16
+script = ExtResource( 2 )
+
+[node name="key1" type="AnimatedSprite" parent="."]
 frames = SubResource( 17 )
-frame = 15
+frame = 13
 playing = true
+
+[node name="collision" type="CollisionShape2D" parent="."]
+shape = SubResource( 18 )
+[connection signal="area_entered" from="." to="." method="_on_key_area_entered"]

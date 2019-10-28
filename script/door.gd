@@ -13,19 +13,17 @@ func _ready():
 		elif direction == -48:
 			$door.frame = door_sprite.down
 	elif direction == 0:
-		#$collision.position.y = 0
-		#$sprite.position.y = 0
 		$door.frame = door_sprite.close
 		$collision.set_deferred("disabled", true)
 
 func _on_door_body_entered(body):
 	var value = direction
 	if body.name == "player":
+		if direction == 0:
+			print("win")
+			return
+		
 		$sprite.visible = true
-		#if direction == 48:
-		#	$sprite.frame = 65
-		#elif direction == -48:
-		#	$sprite.frame = 64
 		body.direction = value
 
 func _on_door_body_exited(body):
