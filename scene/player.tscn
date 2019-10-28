@@ -230,10 +230,12 @@ active = true
 process_mode = 0
 parameters/playback = SubResource( 17 )
 
-[node name="area2d" type="Area2D" parent="."]
+[node name="player" type="Area2D" parent="." groups=[
+"player",
+]]
 collision_mask = 5
 
-[node name="collisionarea" type="CollisionShape2D" parent="area2d"]
+[node name="collisionarea" type="CollisionShape2D" parent="player"]
 visible = false
 shape = SubResource( 18 )
 
@@ -247,5 +249,5 @@ visible = false
 position = Vector2( 0, -4 )
 shape = SubResource( 19 )
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
-[connection signal="area_entered" from="area2d" to="." method="_on_area2d_area_entered"]
-[connection signal="area_exited" from="area2d" to="." method="_on_area2d_area_exited"]
+[connection signal="area_entered" from="player" to="." method="_on_area2d_area_entered"]
+[connection signal="area_exited" from="player" to="." method="_on_area2d_area_exited"]

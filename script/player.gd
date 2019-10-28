@@ -36,7 +36,7 @@ func _ready():
 func knockback():
 	var knock = Vector2.ZERO
 	var new_vector = Vector2.ZERO
-	for body in $area2d.get_overlapping_bodies():
+	for body in $player.get_overlapping_bodies():
 		if body.is_in_group("enemy"):
 			knock = (transform.origin - body.transform.origin) * 1.6
 			new_vector = transform.origin + knock
@@ -52,7 +52,7 @@ func _input(event):
 	
 	if event.is_action_pressed("ui_accept"):
 		assert(get_tree().reload_current_scene() == OK)
-		
+	
 	if event.is_action_pressed("enter"):
 		if direction != 0:
 			move = false

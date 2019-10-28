@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://script/door.gd" type="Script" id=1]
 [ext_resource path="res://sprite/stuff.png" type="Texture" id=2]
 [ext_resource path="res://sprite/tiles.png" type="Texture" id=3]
+[ext_resource path="res://scene/fire.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4, 8 )
@@ -23,6 +24,20 @@ vframes = 16
 hframes = 16
 frame = 118
 
+[node name="right_torch" type="Sprite" parent="."]
+position = Vector2( 16, -6 )
+texture = ExtResource( 3 )
+vframes = 16
+hframes = 16
+frame = 103
+
+[node name="left_torch" type="Sprite" parent="."]
+position = Vector2( -16, -6 )
+texture = ExtResource( 3 )
+vframes = 16
+hframes = 16
+frame = 97
+
 [node name="sprite" type="Sprite" parent="."]
 visible = false
 position = Vector2( 0, -17 )
@@ -31,5 +46,12 @@ texture = ExtResource( 2 )
 vframes = 16
 hframes = 16
 frame = 32
+
+[node name="fire" parent="." instance=ExtResource( 4 )]
+position = Vector2( -9, -10 )
+
+[node name="fire2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 10, -10 )
+scale = Vector2( -1, 1 )
 [connection signal="body_entered" from="." to="." method="_on_door_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_door_body_exited"]
