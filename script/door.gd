@@ -22,6 +22,10 @@ func _on_door_body_entered(body):
 	var value = direction
 	if body.name == "player":
 		$sprite.visible = true
+		#if direction == 48:
+		#	$sprite.frame = 65
+		#elif direction == -48:
+		#	$sprite.frame = 64
 		body.direction = value
 
 func _on_door_body_exited(body):

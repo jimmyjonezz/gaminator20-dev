@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://script/main.gd" type="Script" id=1]
 [ext_resource path="res://sprite/pixel.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://scene/player.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scene/enemy.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scene/ui.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scene/key1.tscn" type="PackedScene" id=9]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -422,6 +423,10 @@ expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="key1" parent="." instance=ExtResource( 9 )]
+position = Vector2( 1420.24, 231.339 )
+frame = 8
 [connection signal="change_ammo" from="player" to="ui" method="_on_player_change_ammo"]
 [connection signal="change_health" from="player" to="ui" method="_on_player_change_health"]
 [connection signal="shoot" from="player" to="ui" method="_on_player_shoot"]
