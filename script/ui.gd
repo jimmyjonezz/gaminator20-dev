@@ -15,6 +15,11 @@ func _input(event):
 		get_tree().paused = new_pause_state
 		$esc.visible = new_pause_state
 		
+	if event.is_action_pressed("ui_accept"):
+		if get_tree().paused:
+			get_tree().set_pause(false)
+			assert(get_tree().reload_current_scene() == OK)
+		
 	if event.is_action_pressed("fullscreen"):
 		OS.window_fullscreen = !OS.window_fullscreen
 		
