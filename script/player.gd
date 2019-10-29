@@ -71,7 +71,7 @@ func _input(event):
 			position.y -= 5
 			$sprite.self_modulate = Color("#393939")
 			$head.self_modulate = Color("#393939")
-			$area2d/collisionarea.set_deferred("disabled", true)
+			$player/collisionarea.set_deferred("disabled", true)
 			#$collision.set_deferred("disabled", true)
 			save = true
 			state_machine.travel("idle")
@@ -80,7 +80,7 @@ func _input(event):
 			position.y += 5
 			$sprite.self_modulate = Color("#ffffff")
 			$head.self_modulate = Color("#ffffff")
-			$area2d/collisionarea.set_deferred("disabled", false)
+			$player/collisionarea.set_deferred("disabled", false)
 			#$collision.set_deferred("disabled", false)
 			save = false
 			set_physics_process(true)

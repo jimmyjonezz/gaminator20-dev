@@ -200,7 +200,7 @@ position = Vector2( 984, 526 )
 direction = 0
 
 [node name="key1" parent="stuff" instance=ExtResource( 9 )]
-position = Vector2( 1650, 382 )
+position = Vector2( 775, 286 )
 
 [node name="key2" parent="stuff" instance=ExtResource( 9 )]
 position = Vector2( 951, 526 )
