@@ -14,7 +14,7 @@ func _ready():
 			$door.frame = door_sprite.down
 	elif direction == 0:
 		$door.frame = door_sprite.close
-		$collision.set_deferred("disabled", true)
+		$collision.set_deferred("disabled", false)
 
 func _on_door_body_entered(body):
 	var value = direction

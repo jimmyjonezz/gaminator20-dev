@@ -49,10 +49,6 @@ func _physics_process(delta):
 	knockback()
 	
 func _input(event):
-	
-	if event.is_action_pressed("ui_accept"):
-		assert(get_tree().reload_current_scene() == OK)
-	
 	if event.is_action_pressed("enter"):
 		if direction != 0:
 			move = false
