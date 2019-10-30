@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://sprite/stuff.png" type="Texture" id=1]
 [ext_resource path="res://script/ui.gd" type="Script" id=2]
@@ -32,6 +32,22 @@ resource_name = "blink"
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("pause_text:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "blink"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("winner_text:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -147,6 +163,7 @@ margin_bottom = 16.0
 
 [node name="esc" type="Control" parent="."]
 pause_mode = 2
+visible = false
 margin_right = 320.0
 margin_bottom = 180.0
 __meta__ = {
@@ -209,6 +226,71 @@ __meta__ = {
 [node name="animation" type="AnimationPlayer" parent="esc"]
 autoplay = "blink"
 anims/blink = SubResource( 7 )
+
+[node name="winner" type="Control" parent="."]
+pause_mode = 2
+margin_right = 320.0
+margin_bottom = 180.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="color" type="ColorRect" parent="winner"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.533333 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="winner_text" type="Label" parent="winner"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = 36.0
+margin_right = -160.0
+margin_bottom = 56.0
+rect_scale = Vector2( 2, 2 )
+custom_fonts/font = SubResource( 5 )
+text = "WINNER"
+align = 1
+valign = 3
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="under_text" type="Label" parent="winner"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = 50.0
+margin_bottom = 58.0
+custom_fonts/font = SubResource( 6 )
+text = "press ENTER to reload scene"
+align = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="under_text3" type="Label" parent="winner"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = 58.0
+margin_bottom = 66.0
+custom_fonts/font = SubResource( 6 )
+text = "press ALT + F4 to exit"
+align = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="animation" type="AnimationPlayer" parent="winner"]
+autoplay = "blink"
+anims/blink = SubResource( 8 )
 
 [node name="tween" type="Tween" parent="."]
 pause_mode = 1

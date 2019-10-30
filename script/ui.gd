@@ -5,12 +5,19 @@ signal shooting()
 var ammo_count = 4
 var count = 4
 var health_count = 5
+var win = false
+var over = false
+var hromatic = false
 
 func _ready():
 	$esc.visible = false
+	$winner.visible = false
 	
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
+		if win or over:
+			return
+			
 		var new_pause_state = not get_tree().paused
 		get_tree().paused = new_pause_state
 		$esc.visible = new_pause_state
@@ -19,6 +26,7 @@ func _input(event):
 		if get_tree().paused:
 			get_tree().set_pause(false)
 			assert(get_tree().reload_current_scene() == OK)
+			$winner.visible = false
 		
 	if event.is_action_pressed("fullscreen"):
 		OS.window_fullscreen = !OS.window_fullscreen
@@ -49,3 +57,20 @@ func _on_player_change_health():
 	count = health_count
 	health_count -=1
 	animate_value($margin/hbox_right/health/health_progress, count, health_count, 0.3)
+	
+	if count < 2:
+		player_die()
+		
+func player_die():
+	over = true
+	$winner/winner_text.text = "GAME OVER"
+	var new_pause_state = not get_tree().paused
+	get_tree().paused = new_pause_state
+	$winner.visible = true
+
+func _on_door_win():
+	win = true
+	var new_pause_state = not get_tree().paused
+	get_tree().paused = new_pause_state
+	$winner.visible = true
+	
