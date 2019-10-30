@@ -59,6 +59,7 @@ func _on_player_change_health():
 	animate_value($margin/hbox_right/health/health_progress, count, health_count, 0.3)
 	
 	if count < 2:
+		#здесь бы анимацию смерти!
 		player_die()
 		
 func player_die():
@@ -74,3 +75,7 @@ func _on_door_win():
 	get_tree().paused = new_pause_state
 	$winner.visible = true
 	
+func _on_health_pickup():
+	var health = health_count
+	health_count = 5
+	animate_value($margin/hbox_right/health/health_progress, health, health_count, 0.7)
