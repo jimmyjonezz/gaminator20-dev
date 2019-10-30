@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://script/main.gd" type="Script" id=1]
 [ext_resource path="res://sprite/pixel.png" type="Texture" id=2]
@@ -67,6 +67,26 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id=4]
 shader = SubResource( 3 )
+
+[sub_resource type="Shader" id=5]
+code = "shader_type canvas_item;
+
+uniform float percent : hint_range(0, 1);
+
+void fragment(){
+vec2 relative_uv = UV.yx - vec2(0.5);
+float dist = abs(percent - distance(UV, vec2(0.5))) * 7.0;
+float wave = pow(cos(dist)*sin(dist), 5.0);
+vec2 displacement = (1.0/(percent+0.01)) * relative_uv * clamp(wave, 0.0, 1.0);
+
+displacement *= 5.0 * pow(abs(length(relative_uv) - 0.65), 2.0) * (1.0 - percent);
+
+COLOR = texture(SCREEN_TEXTURE, SCREEN_UV + displacement);
+}"
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 5 )
+shader_param/percent = 0.0
 
 [node name="main" type="Node2D"]
 use_parent_material = true
@@ -199,7 +219,7 @@ direction = -48
 direction = 0
 
 [node name="key1" parent="stuff" instance=ExtResource( 9 )]
-position = Vector2( 536, 238 )
+position = Vector2( 1446, 192 )
 
 [node name="fire" parent="stuff" instance=ExtResource( 3 )]
 position = Vector2( 143, 132 )
@@ -292,7 +312,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="shader_swirl" type="TextureRect" parent="ui"]
+visible = false
+material = SubResource( 6 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="shader_time" type="Timer" parent="ui"]
+wait_time = 15.0
+one_shot = true
 [connection signal="pickup" from="stuff/key1" to="." method="_on_key1_pickup"]
 [connection signal="change_ammo" from="player" to="ui" method="_on_player_change_ammo"]
 [connection signal="change_health" from="player" to="ui" method="_on_player_change_health"]
