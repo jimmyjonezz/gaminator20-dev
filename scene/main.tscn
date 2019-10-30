@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://script/main.gd" type="Script" id=1]
 [ext_resource path="res://sprite/pixel.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://scene/enemy.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scene/ui.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scene/key1.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scene/health.tscn" type="PackedScene" id=10]
 
 [sub_resource type="Shader" id=3]
 code = "shader_type canvas_item;
@@ -219,7 +220,7 @@ direction = -48
 direction = 0
 
 [node name="key1" parent="stuff" instance=ExtResource( 9 )]
-position = Vector2( 775, 286 )
+position = Vector2( 536, 238 )
 
 [node name="fire" parent="stuff" instance=ExtResource( 3 )]
 position = Vector2( 143, 132 )
@@ -230,6 +231,12 @@ position = Vector2( 755, 516 )
 [node name="fire3" parent="stuff" instance=ExtResource( 3 )]
 position = Vector2( 1224, 516 )
 scale = Vector2( -1, 1 )
+
+[node name="health" parent="stuff" instance=ExtResource( 10 )]
+position = Vector2( 169, 142 )
+
+[node name="health2" parent="stuff" instance=ExtResource( 10 )]
+position = Vector2( 1450, 190 )
 
 [node name="player" parent="." instance=ExtResource( 6 )]
 position = Vector2( 1199, 526 )
@@ -428,6 +435,8 @@ __meta__ = {
 }
 [connection signal="win" from="stuff/door" to="ui" method="_on_door_win"]
 [connection signal="pickup" from="stuff/key1" to="." method="_on_key1_pickup"]
+[connection signal="pickup" from="stuff/health" to="ui" method="_on_health_pickup"]
+[connection signal="pickup" from="stuff/health2" to="ui" method="_on_health_pickup"]
 [connection signal="change_ammo" from="player" to="ui" method="_on_player_change_ammo"]
 [connection signal="change_health" from="player" to="ui" method="_on_player_change_health"]
 [connection signal="shoot" from="player" to="ui" method="_on_player_shoot"]
