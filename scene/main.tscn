@@ -424,6 +424,8 @@ __meta__ = {
 }
 
 [node name="shader_time" type="Timer" parent="ui"]
+wait_time = 15.0
+one_shot = true
 [connection signal="pickup" from="stuff/key1" to="." method="_on_key1_pickup"]
 [connection signal="change_ammo" from="player" to="ui" method="_on_player_change_ammo"]
 [connection signal="change_health" from="player" to="ui" method="_on_player_change_health"]
