@@ -6,7 +6,7 @@
 [ext_resource path="res://map/new_tileset.tres" type="TileSet" id=4]
 [ext_resource path="res://scene/door.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scene/player.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scene/enemy.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scene/spawner.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scene/ui.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scene/key1.tscn" type="PackedScene" id=9]
 
@@ -217,152 +217,52 @@ collision_mask = 30
 
 [node name="enemy" type="Node2D" parent="."]
 
-[node name="enemy" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 780, 526 )
+[node name="spawner" parent="enemy" instance=ExtResource( 7 )]
+position = Vector2( 880, 534 )
+amount = 1
 
-[node name="enemy10" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 634, 478 )
+[node name="spawner4" parent="enemy" instance=ExtResource( 7 )]
+position = Vector2( 708, 438.72 )
 
-[node name="enemy14" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 628, 430 )
+[node name="spawner13" parent="enemy" instance=ExtResource( 7 )]
+position = Vector2( 560, 390.72 )
 
-[node name="enemy16" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 460, 430 )
+[node name="spawner5" parent="enemy" instance=ExtResource( 7 )]
+position = Vector2( 1292.73, 438.72 )
 
-[node name="enemy49" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 440, 430 )
+[node name="spawner6" parent="enemy" instance=ExtResource( 7 )]
+position = Vector2( 844.28, 342.72 )
+amount = 1
 
-[node name="enemy18" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 487, 382 )
+[node name="spawner7" parent="enemy" instance=ExtResource( 7 )]
+position = Vector2( 1650.21, 390.72 )
+amount = 1
 
-[node name="enemy20" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 567, 382 )
+[node name="spawner8" parent="enemy" instance=ExtResource( 7 )]
+position = Vector2( 1328.28, 246.72 )
+amount = 2
 
-[node name="enemy21" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 829, 382 )
+[node name="spawner9" parent="enemy" instance=ExtResource( 7 )]
+position = Vector2( 620.28, 150.72 )
+amount = 1
 
-[node name="enemy22" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 894, 382 )
+[node name="spawner3" parent="enemy" instance=ExtResource( 7 )]
+position = Vector2( 649, 534.72 )
 
-[node name="enemy19" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 308, 382 )
+[node name="spawner10" parent="enemy" instance=ExtResource( 7 )]
+position = Vector2( 1207, 150.72 )
+amount = 2
 
-[node name="enemy26" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 190, 334 )
+[node name="spawner11" parent="enemy" instance=ExtResource( 7 )]
+position = Vector2( 763, 198.72 )
+amount = 2
 
-[node name="enemy27" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 234, 334 )
+[node name="spawner12" parent="enemy" instance=ExtResource( 7 )]
+position = Vector2( 1441.72, 198.72 )
+amount = 1
 
-[node name="enemy28" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 507, 334 )
-
-[node name="enemy29" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 732, 334 )
-
-[node name="enemy32" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 706, 286 )
-
-[node name="enemy33" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 1020, 286 )
-
-[node name="enemy34" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 1059, 238 )
-
-[node name="enemy39" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 580, 238 )
-
-[node name="enemy35" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 1134, 238 )
-
-[node name="enemy40" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 1130, 190 )
-
-[node name="enemy48" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 1100, 142 )
-
-[node name="enemy41" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 1067, 190 )
-
-[node name="enemy42" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 911, 190 )
-
-[node name="enemy43" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 734, 190 )
-
-[node name="enemy44" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 786, 190 )
-
-[node name="enemy36" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 1243, 238 )
-
-[node name="enemy37" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 1337, 238 )
-
-[node name="enemy38" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 1315, 238 )
-
-[node name="enemy30" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 788, 334 )
-
-[node name="enemy31" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 900, 334 )
-
-[node name="enemy17" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 192, 430 )
-
-[node name="enemy15" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 711, 430 )
-
-[node name="enemy11" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 587, 478 )
-
-[node name="enemy12" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 447, 478 )
-
-[node name="enemy13" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 344, 478 )
-
-[node name="enemy2" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 611, 526 )
-
-[node name="enemy3" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 658, 142 )
-
-[node name="enemy46" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 629, 142 )
-
-[node name="enemy47" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 484, 142 )
-
-[node name="enemy45" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 753, 142 )
-
-[node name="enemy5" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 1072, 430 )
-
-[node name="enemy6" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 1124, 430 )
-
-[node name="enemy7" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 1220, 430 )
-
-[node name="enemy8" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 1336, 430 )
-
-[node name="enemy9" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 1326, 382 )
-
-[node name="enemy23" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 1513, 382 )
-
-[node name="enemy24" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 1567, 382 )
-
-[node name="enemy25" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 1743, 382 )
-
-[node name="enemy4" parent="enemy" instance=ExtResource( 7 )]
-position = Vector2( 656, 526 )
+[node name="spawner2" parent="enemy" instance=ExtResource( 7 )]
+position = Vector2( 306.483, 342.72 )
 
 [node name="props" type="Node2D" parent="."]
 

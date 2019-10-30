@@ -20,6 +20,8 @@ func _on_area2d_area_entered(area):
 		die()
 		
 func shoot() -> void:
+	if died:
+		return
 	if shooting == false:
 		$timer.start()
 		var bullet = Bullet.instance()
@@ -70,13 +72,32 @@ func _process(delta):
 	else:
 		$atention.visible = false
 
-func _physics_process(delta):	
+var enemy_state = 0
+var nxt_state = 0
+
+func _physics_process(delta):
 	#задел на хождение enemy
-	#velocity.x = speed
-	velocity = move_and_slide(velocity * delta)
+	#velocity.y = 9.8 * 300
+	if save or shooting or died:
+		enemy_state = 0
+		velocity.x = 0
+	else:
+		if enemy_state == 0 and nxt_state < autoload.time:
+			enemy_state = randi()%2
+			nxt_state = autoload.time + 2
+	
+	if enemy_state == 1:
+		if $sprite.flip_h:
+			velocity.x = -50
+		else:
+			velocity.x = 50
+	
+	velocity = move_and_slide(velocity)
+	
 	if velocity.length() > 0:
 		$animation.play("idle")
-		
+	
+
 func _save():
 	#enemy прячется
 	if !save:

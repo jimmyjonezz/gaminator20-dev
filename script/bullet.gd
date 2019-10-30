@@ -6,6 +6,8 @@ var enemy = false
 func _ready():
 	if get_parent().name == "enemy":
 		_layer_off()
+	else:
+		speed = speed*1.5
 
 func start(pos, dir) -> void:
 	rotation = dir
