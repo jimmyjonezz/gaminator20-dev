@@ -1,7 +1,9 @@
 extends Area2D
 
+signal win()
+
 enum var_direction {up = 48, down = -48, center = 0}
-enum door_sprite {up = 98, down = 82, close = 118}
+enum door_sprite {up = 98, down = 82, close = 134}
 export (var_direction) var direction
 
 func _ready():
@@ -20,7 +22,7 @@ func _on_door_body_entered(body):
 	var value = direction
 	if body.name == "player":
 		if direction == 0:
-			print("win")
+			emit_signal("win")
 			return
 		
 		$sprite.visible = true

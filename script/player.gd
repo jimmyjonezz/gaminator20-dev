@@ -3,7 +3,8 @@ extends KinematicBody2D
 signal shoot()
 signal change_ammo()
 signal change_health()
-var nums = [7, 8, 9, 10]
+
+var nums = [7, 8, 9, 10, 11]
 
 export var Bullet : PackedScene
 
@@ -137,7 +138,7 @@ func _on_area2d_area_entered(area):
 	if area in teleports:
 		area_position.y = area.position.y
 	
-	elif area.is_in_group("props") and count < 4:
+	if area.is_in_group("props") and count < 4:
 		count = 4
 		emit_signal("change_ammo")
 		area.die()
