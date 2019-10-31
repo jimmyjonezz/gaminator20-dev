@@ -1,7 +1,7 @@
 info face="smallfont" size=3 bold=0 italic=0 charset="" unicode=0 stretchH=100 smooth=0 aa=0 padding=0,0,0,0 spacing=1,1
 common lineHeight=3 base=26 scaleW=160 scaleH=160 pages=1 packed=0 alphaChnl=1 redChnl=0 greenChnl=0 blueChnl=0
 page id=0 file="tinyfont.png"
-chars count=96
+chars count=100
 char id=32 x=0 y=18 width=3 height=6 xoffset=0 yoffset=0 xadvance=4 page=0 chnl=0 letter=" "
 char id=63 x=6 y=18 width=3 height=6 xoffset=0 yoffset=0 xadvance=4 page=0 chnl=0 letter="?"
 char id=39 x=12 y=18 width=3 height=6 xoffset=0 yoffset=0 xadvance=4 page=0 chnl=0 letter="'"
@@ -11,6 +11,9 @@ char id=46 x=66 y=12 width=3 height=6 xoffset=0 yoffset=0 xadvance=4 page=0 chnl
 char id=58 x=18 y=18 width=3 height=6 xoffset=0 yoffset=0 xadvance=4 page=0 chnl=0 letter=":"
 char id=47 x=24 y=18 width=3 height=6 xoffset=0 yoffset=0 xadvance=4 page=0 chnl=0 letter="/"
 char id=43 x=30 y=18 width=3 height=6 xoffset=0 yoffset=0 xadvance=4 page=0 chnl=0 letter="+"
+char id=34 x=36 y=18 width=3 height=6 xoffset=0 yoffset=0 xadvance=4 page=0 chnl=0 letter="""
+char id=61 x=42 y=18 width=3 height=6 xoffset=0 yoffset=0 xadvance=4 page=0 chnl=0 letter="="
+char id=45 x=48 y=18 width=3 height=6 xoffset=0 yoffset=0 xadvance=4 page=0 chnl=0 letter="-"
 char id=48 x=0 y=12 width=3 height=6 xoffset=0 yoffset=0 xadvance=4 page=0 chnl=0 letter="0"
 char id=49 x=6 y=12 width=3 height=6 xoffset=0 yoffset=0 xadvance=4 page=0 chnl=0 letter="1"
 char id=50 x=12 y=12 width=3 height=6 xoffset=0 yoffset=0 xadvance=4 page=0 chnl=0 letter="2"

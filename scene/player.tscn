@@ -1,10 +1,12 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://script/player.gd" type="Script" id=1]
 [ext_resource path="res://sprite/stuff.png" type="Texture" id=2]
 [ext_resource path="res://scene/bullet.tscn" type="PackedScene" id=3]
 [ext_resource path="res://script/pivot.gd" type="Script" id=4]
 [ext_resource path="res://sound/sfx_movement_footstepsloop4_fast.wav" type="AudioStream" id=5]
+[ext_resource path="res://font/tinyfont.fnt" type="BitmapFont" id=6]
+[ext_resource path="res://scene/screenshake/screenshake.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 3.0
@@ -169,6 +171,11 @@ height = 6.0
 [sub_resource type="RectangleShape2D" id=19]
 extents = Vector2( 3, 1 )
 
+[sub_resource type="BitmapFont" id=20]
+height = 3.0
+ascent = 25.0
+fallback = ExtResource( 6 )
+
 [node name="player" type="KinematicBody2D"]
 collision_mask = 15
 script = ExtResource( 1 )
@@ -216,6 +223,8 @@ drag_margin_right = 0.1
 drag_margin_bottom = 0.1
 editor_draw_drag_margin = true
 
+[node name="screenshake" parent="pivot/offset/camera" instance=ExtResource( 7 )]
+
 [node name="animation" type="AnimationPlayer" parent="."]
 autoplay = "idle"
 anims/fade_in = SubResource( 2 )
@@ -248,6 +257,19 @@ stream = ExtResource( 5 )
 visible = false
 position = Vector2( 0, -4 )
 shape = SubResource( 19 )
+
+[node name="press" type="Label" parent="."]
+visible = false
+margin_left = -12.9047
+margin_top = -19.0919
+margin_right = 15.0953
+margin_bottom = -12.0919
+custom_fonts/font = SubResource( 20 )
+text = "press H"
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="player" to="." method="_on_area2d_area_entered"]
 [connection signal="area_exited" from="player" to="." method="_on_area2d_area_exited"]

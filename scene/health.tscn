@@ -17,12 +17,13 @@ script = ExtResource( 3 )
 shape = SubResource( 1 )
 
 [node name="heart" type="Sprite" parent="."]
-position = Vector2( 0, -0.833879 )
+position = Vector2( 0, -1 )
 texture = ExtResource( 1 )
 vframes = 16
 hframes = 16
 frame = 23
 
 [node name="anim" type="AnimationPlayer" parent="."]
+autoplay = "ammo"
 anims/ammo = ExtResource( 2 )
 [connection signal="area_entered" from="." to="." method="_on_health_area_entered"]

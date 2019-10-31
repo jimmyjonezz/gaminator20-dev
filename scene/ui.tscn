@@ -65,15 +65,15 @@ scale = Vector2( 4, 4 )
 transform = Transform2D( 4, 0, 0, 4, 0, 0 )
 script = ExtResource( 2 )
 __meta__ = {
-"_edit_vertical_guides_": [ 609.0 ]
+"_edit_vertical_guides_": [ 625.0 ]
 }
 
 [node name="margin" type="Control" parent="."]
 pause_mode = 1
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -476.0
-margin_right = 476.0
+margin_left = -480.0
+margin_right = 472.0
 margin_bottom = 532.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -163,9 +163,10 @@ margin_bottom = 16.0
 
 [node name="esc" type="Control" parent="."]
 pause_mode = 2
-visible = false
 margin_right = 320.0
 margin_bottom = 180.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -231,6 +232,8 @@ anims/blink = SubResource( 7 )
 pause_mode = 2
 margin_right = 320.0
 margin_bottom = 180.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
 __meta__ = {
 "_edit_use_anchors_": false
 }
