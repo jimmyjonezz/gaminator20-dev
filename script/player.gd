@@ -144,12 +144,18 @@ func _on_area2d_area_entered(area):
 		area.die()
 	
 	if area.is_in_group("bullet"):
+		#$pivot/offset/camera/screenshake.start(0.2, 12.0, 12, 0)
 		emit_signal("change_health")
 		area.die()
 		var knock = (transform.origin - area.transform.origin) * 2
 		var new_vector = transform.origin + knock
 		$tween.interpolate_property(self, "position:x", transform.origin.x, new_vector.x, 0.1, $tween.TRANS_LINEAR, $tween.EASE_OUT_IN)
 		$tween.start()
+		
+	if area.is_in_group("activate"):
+		$press.visible = true
+		yield(get_tree().create_timer(1), "timeout")
+		$press.visible = false
 
 func _on_ui_shooting(signal_state, value):
 	if value:
