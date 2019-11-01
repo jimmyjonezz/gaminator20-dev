@@ -20,6 +20,10 @@ run/main_scene="res://scene/main.tscn"
 boot_splash/image="res://sprite/splash.png"
 config/icon="res://icon.png"
 
+[autoload]
+
+autoload="*res://script/autoload.gd"
+
 [display]
 
 window/size/width=960

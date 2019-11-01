@@ -70,13 +70,33 @@ func _process(delta):
 	else:
 		$atention.visible = false
 
-func _physics_process(delta):	
+var walk_state = 0
+var nxt_walk = 0
+
+func _physics_process(delta):
 	#задел на хождение enemy
-	#velocity.x = speed
-	velocity = move_and_slide(velocity * delta)
+	
+	if save or died or shooting:
+		walk_state = 0
+	else:
+		if nxt_walk < autoload.time:
+			walk_state = randi()%2
+			nxt_walk = autoload.time + 2
+	
+	if walk_state == 1:
+		if $sprite.flip_h:
+			velocity.x = -50
+		else:
+			velocity.x = 50
+	else:
+		velocity.x = 0
+	
+	velocity = move_and_slide(velocity)
+	
 	if velocity.length() > 0:
 		$animation.play("idle")
-		
+	
+
 func _save():
 	#enemy прячется
 	if !save:

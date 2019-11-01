@@ -13,12 +13,12 @@
 [ext_resource path="res://font/tinyfont.fnt" type="BitmapFont" id=11]
 [ext_resource path="res://scene/activate.tscn" type="PackedScene" id=12]
 
-[sub_resource type="BitmapFont" id=7]
+[sub_resource type="BitmapFont" id=1]
 height = 4.0
 ascent = 25.0
 fallback = ExtResource( 11 )
 
-[sub_resource type="Shader" id=1]
+[sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;
 
 void fragment() {
@@ -34,10 +34,10 @@ void fragment() {
     COLOR.xyz = col;
 }"
 
-[sub_resource type="ShaderMaterial" id=2]
-shader = SubResource( 1 )
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
 
-[sub_resource type="Shader" id=3]
+[sub_resource type="Shader" id=4]
 code = "shader_type canvas_item;
 
 uniform float percent : hint_range(0, 1);
@@ -53,11 +53,11 @@ displacement *= 5.0 * pow(abs(length(relative_uv) - 0.65), 2.0) * (1.0 - percent
 COLOR = texture(SCREEN_TEXTURE, SCREEN_UV + displacement);
 }"
 
-[sub_resource type="ShaderMaterial" id=4]
-shader = SubResource( 3 )
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 4 )
 shader_param/percent = 0.03
 
-[sub_resource type="Shader" id=5]
+[sub_resource type="Shader" id=6]
 code = "shader_type canvas_item;
 
 uniform float size_x=0.005;
@@ -85,8 +85,8 @@ COLOR.rgb = Chromatic_Aberration;
 //COLOR.rgb= textureLod(SCREEN_TEXTURE,uv,0.0).rgb;
 }"
 
-[sub_resource type="ShaderMaterial" id=6]
-shader = SubResource( 5 )
+[sub_resource type="ShaderMaterial" id=7]
+shader = SubResource( 6 )
 shader_param/size_x = 0.001
 shader_param/size_y = 0.001
 shader_param/r_offset_x = -0.003
@@ -227,7 +227,7 @@ direction = -48
 direction = 0
 
 [node name="key1" parent="stuff" instance=ExtResource( 9 )]
-position = Vector2( 536, 238 )
+position = Vector2( 775, 286 )
 
 [node name="fire" parent="stuff" instance=ExtResource( 3 )]
 position = Vector2( 143, 132 )
@@ -415,7 +415,7 @@ margin_left = 1076.0
 margin_top = 572.0
 margin_right = 1365.0
 margin_bottom = 606.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 1 )
 text = "press X to shoot
 press z to use or hide
 press F to fullscreen
@@ -432,7 +432,7 @@ margin_top = 472.0
 margin_right = 1220.0
 margin_bottom = 518.0
 rect_scale = Vector2( 2, 2 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 1 )
 text = "\"NOT A DUNGEON\""
 align = 1
 uppercase = true
@@ -452,7 +452,7 @@ one_shot = true
 
 [node name="post_processing_shader" type="TextureRect" parent="ui"]
 visible = false
-material = SubResource( 2 )
+material = SubResource( 3 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
@@ -463,7 +463,7 @@ __meta__ = {
 
 [node name="shader_swirl" type="TextureRect" parent="ui"]
 visible = false
-material = SubResource( 4 )
+material = SubResource( 5 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
@@ -474,7 +474,7 @@ __meta__ = {
 
 [node name="hromatic" type="TextureRect" parent="ui"]
 visible = false
-material = SubResource( 6 )
+material = SubResource( 7 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
