@@ -1,8 +1,10 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://sprite/stuff.png" type="Texture" id=1]
 [ext_resource path="res://script/ui.gd" type="Script" id=2]
+[ext_resource path="res://sound/sfx_sounds_pause3_in.wav" type="AudioStream" id=3]
 [ext_resource path="res://font/tinyfont.fnt" type="BitmapFont" id=4]
+[ext_resource path="res://sound/sfx_sounds_falling6.wav" type="AudioStream" id=5]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
@@ -297,3 +299,13 @@ anims/blink = SubResource( 8 )
 
 [node name="tween" type="Tween" parent="."]
 pause_mode = 1
+
+[node name="win" type="AudioStreamPlayer" parent="."]
+
+[node name="lose" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+bus = "audio"
+
+[node name="pause" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+bus = "audio"

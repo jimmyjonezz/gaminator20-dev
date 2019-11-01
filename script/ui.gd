@@ -25,6 +25,7 @@ func _input(event):
 		if win or over:
 			return
 			
+		$pause.play()
 		var new_pause_state = not get_tree().paused
 		get_tree().paused = new_pause_state
 		$esc.visible = new_pause_state
@@ -66,12 +67,14 @@ func _on_player_change_health():
 	count = health_count
 	health_count -=1
 	animate_value($margin/hbox_right/health/health_progress, count, health_count, 0.3)
+	yield($tween, "tween_completed")
 	
 	if count < 2:
 		#здесь бы анимацию смерти!
 		player_die()
 		
 func player_die():
+	$lose.play()
 	over = true
 	$winner/winner_text.text = "GAME OVER"
 	var new_pause_state = not get_tree().paused

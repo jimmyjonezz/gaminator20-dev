@@ -1,7 +1,7 @@
 extends Node
 
-var amplitude = 0
-var priority = 0
+var amplitude
+var priority
 
 onready var camera = get_parent()
 

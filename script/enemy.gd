@@ -39,6 +39,7 @@ func die():
 	$collision.set_deferred("disabled", true)
 	$area2d/area_collision.set_deferred("disabled", true)
 	$animation.play("die")
+	$die.play()
 	#yield($animation, "animation_finished")
 	$dir_timer.stop()
 	_spawn_props()

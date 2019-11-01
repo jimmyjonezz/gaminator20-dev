@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://sprite/stuff.png" type="Texture" id=1]
+[ext_resource path="res://sound/sfx_sounds_interaction17.wav" type="AudioStream" id=2]
 [ext_resource path="res://script/activate.gd" type="Script" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -38,4 +39,8 @@ texture = ExtResource( 1 )
 vframes = 16
 hframes = 16
 frame = 51
+
+[node name="pickup" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+bus = "audio"
 [connection signal="area_entered" from="." to="." method="_on_activate_area_entered"]
