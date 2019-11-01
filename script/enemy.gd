@@ -6,6 +6,7 @@ var shooting = false
 var save = false
 var nums = [true, false]
 var died = false
+var too_close = false
 
 onready var props = get_node("../../props")
 
@@ -56,12 +57,20 @@ func _ready():
 	$dir_timer.wait_time = rand_range(3, 5)
 	$timer.start()
 	$dir_timer.start()
-	
+
 func _process(delta):
 	#луч рэйкаста чего-то касается?
 	var target_dis = $raycast.is_colliding()
 	#если да, то флаг активен и можно стрелять
 	if target_dis:
+		
+		var pos = $raycast.get_collision_point()
+		
+		if pos.distance_to(self.global_position) < 25:
+			too_close = true
+		else:
+			too_close = false
+		
 		$atention.visible = true
 		if !save:
 			yield(get_tree().create_timer(0.5), "timeout")
@@ -69,6 +78,7 @@ func _process(delta):
 		shooting = true
 	else:
 		$atention.visible = false
+		too_close = false
 
 var walk_state = 0
 var nxt_walk = 0
@@ -76,7 +86,7 @@ var nxt_walk = 0
 func _physics_process(delta):
 	#задел на хождение enemy
 	
-	if save or died or shooting:
+	if save or died or shooting or too_close:
 		walk_state = 0
 	else:
 		if nxt_walk < autoload.time:
