@@ -34,6 +34,7 @@ func shoot() -> void:
 		#emit_signal("shoot")
 		
 func die():
+	$rebirth.start()
 	died = true
 	$raycast.enabled = false
 	$timer.stop()
@@ -102,11 +103,12 @@ func _physics_process(delta):
 			velocity.x = step
 	else:
 		velocity.x = 0
+		$animation.play("idle")
 	
 	velocity = move_and_slide(velocity)
 	
 	if velocity.length() > 0:
-		$animation.play("idle")
+		$animation.play("run")
 
 func _save():
 	#enemy прячется
@@ -161,6 +163,12 @@ func _on_VisibilityNotifier2D_screen_entered():
 
 func _on_VisibilityNotifier2D_screen_exited():
 	if died:
-		queue_free()
+		pass
+		#queue_free()
 	
 	set_physics_process(false)
+
+func _on_rebirth_timeout():
+	var idx = get_instance_id()
+	get_parent().spawn_enemy(idx)
+	queue_free()
