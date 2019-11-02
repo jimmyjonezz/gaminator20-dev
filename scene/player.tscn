@@ -4,7 +4,7 @@
 [ext_resource path="res://sprite/stuff.png" type="Texture" id=2]
 [ext_resource path="res://scene/bullet.tscn" type="PackedScene" id=3]
 [ext_resource path="res://script/pivot.gd" type="Script" id=4]
-[ext_resource path="res://sound/sfx_movement_footstepsloop4_fast.wav" type="AudioStream" id=5]
+[ext_resource path="res://sound/sfx_movement_footstepsloop4_fast.ogg" type="AudioStream" id=5]
 [ext_resource path="res://font/tinyfont.fnt" type="BitmapFont" id=6]
 [ext_resource path="res://scene/screenshake/screenshake.tscn" type="PackedScene" id=7]
 
@@ -250,6 +250,7 @@ shape = SubResource( 18 )
 
 [node name="audio" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 5 )
+bus = "audio"
 
 [node name="tween" type="Tween" parent="."]
 
@@ -260,12 +261,13 @@ shape = SubResource( 19 )
 
 [node name="press" type="Label" parent="."]
 visible = false
-margin_left = -12.9047
-margin_top = -19.0919
-margin_right = 15.0953
-margin_bottom = -12.0919
+margin_left = -7.0
+margin_top = -17.0
+margin_right = 21.0
+margin_bottom = -10.0
+rect_scale = Vector2( 0.5, 0.5 )
 custom_fonts/font = SubResource( 20 )
-text = "press H"
+text = "Oooops!"
 uppercase = true
 __meta__ = {
 "_edit_use_anchors_": false

@@ -165,6 +165,7 @@ margin_bottom = 16.0
 
 [node name="esc" type="Control" parent="."]
 pause_mode = 2
+visible = false
 margin_right = 320.0
 margin_bottom = 180.0
 size_flags_horizontal = 7
@@ -232,6 +233,7 @@ anims/blink = SubResource( 7 )
 
 [node name="winner" type="Control" parent="."]
 pause_mode = 2
+visible = false
 margin_right = 320.0
 margin_bottom = 180.0
 size_flags_horizontal = 7

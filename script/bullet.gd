@@ -21,8 +21,8 @@ func _physics_process(delta):
 	position += Vector2(speed, 0).rotated(rotation) * delta
 	
 func die():
-	$die.play()
-	yield($die, "finished")
+	#$die.play()
+	#yield($die, "finished")
 	queue_free()
 
 func _on_bullet_area_entered(area):

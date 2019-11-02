@@ -46,4 +46,3 @@ anims/idle = SubResource( 2 )
 [node name="pickup" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 bus = "audio"
-[connection signal="area_entered" from="." to="." method="_on_ammo_area_entered"]

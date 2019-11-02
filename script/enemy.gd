@@ -21,7 +21,7 @@ func _on_area2d_area_entered(area):
 		die()
 		
 func shoot() -> void:
-	if shooting == false:
+	if shooting == false and died == false:
 		$timer.start()
 		var bullet = Bullet.instance()
 		get_parent().add_child(bullet)
@@ -91,14 +91,15 @@ func _physics_process(delta):
 		walk_state = 0
 	else:
 		if nxt_walk < autoload.time:
-			walk_state = randi()%2
+			walk_state = randi() % 2
 			nxt_walk = autoload.time + 2
 	
+	var step = rand_range(20, 40)
 	if walk_state == 1:
 		if $sprite.flip_h:
-			velocity.x = -50
+			velocity.x = -step
 		else:
-			velocity.x = 50
+			velocity.x = step
 	else:
 		velocity.x = 0
 	
@@ -106,16 +107,17 @@ func _physics_process(delta):
 	
 	if velocity.length() > 0:
 		$animation.play("idle")
-	
 
 func _save():
 	#enemy прячется
 	if !save:
+		$area2d/area_collision.set_deferred("disabled", true)
 		position.y -= 5
 		$sprite.self_modulate = Color("#393939")
 		save = true
 		#set_physics_process(false)
 	elif save:
+		$area2d/area_collision.set_deferred("disabled", false)
 		position.y += 5
 		$sprite.self_modulate = Color("#ffffff")
 		save = false

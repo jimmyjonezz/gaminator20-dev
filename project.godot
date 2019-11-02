@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="gaminator20"
+config/name="Not a dungeon"
 run/main_scene="res://scene/main.tscn"
 boot_splash/image="res://sprite/splash.png"
 config/icon="res://icon.png"

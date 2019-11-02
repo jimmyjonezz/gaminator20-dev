@@ -7,8 +7,10 @@ var count = 4
 var health_count = 5
 var win = false
 var over = false
-var activate = false
+
 onready var shader = get_children()
+onready var fps = get_node("fps")
+onready var shader_time = get_node("shader_time")
 var shader_array : Array
 
 func _ready():
@@ -38,11 +40,6 @@ func _input(event):
 		
 	if event.is_action_pressed("fullscreen"):
 		OS.window_fullscreen = !OS.window_fullscreen
-		
-	if event.is_action_pressed("hromatic"):
-		if activate:
-			var m = shader_array[randi() % shader_array.size()]
-			m.visible = not m.visible
 	
 #общая функция для анимации шкалы задержки выстрела, статус баров жизни и патрон
 func animate_value(object, start, end, tic):
@@ -86,11 +83,20 @@ func _on_door_win():
 	var new_pause_state = not get_tree().paused
 	get_tree().paused = new_pause_state
 	$winner.visible = true
+
+func _on_activate_activate(value):
+	shader_time.stop()
+	for x in shader_array.size():
+		shader_array[x].visible = false
 	
-func _on_health_pickup():
+	var m = shader_array[value]
+	m.visible = true
+	shader_time.start()
+
+func _process(delta):
+	fps.text = "FPS: " + str(Engine.get_frames_per_second())
+
+func _on_player_pickup():
 	var health = health_count
 	health_count = 5
 	animate_value($margin/hbox_right/health/health_progress, health, health_count, 0.7)
-
-func _on_activate_activate():
-	activate = true

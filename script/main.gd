@@ -26,16 +26,12 @@ func set_camera_limits() -> void:
 	camera.limit_bottom = map_limits.end.y * map_cellsize.y
 
 func _on_shader_time_timeout():
-	$ui/shader.visible = false
+	$ui/hromatic.visible = false
 	$ui/post_processing_shader.visible = false
-
-#проверочный код для ключа 2 - потом убрать!
-func _on_key2_pickup():
-	var spawn_door_point = exit_door_spawn[randi() % exit_door_spawn.size()]
-	$stuff/door.position = spawn_door_point
-	printt("position door:", spawn_door_point)
+	$ui/shader_swirl.visible = false
 
 func _on_key1_pickup():
 	var spawn_door_point = exit_door_spawn[randi() % exit_door_spawn.size()]
 	$stuff/door.position = spawn_door_point
 	printt("position door:", spawn_door_point)
+	$sound/door.play()
