@@ -6,6 +6,7 @@ var shooting = false
 var save = false
 var nums = [true, false]
 var died = false
+var too_close = false
 
 onready var props = get_node("../../props")
 
@@ -20,9 +21,7 @@ func _on_area2d_area_entered(area):
 		die()
 		
 func shoot() -> void:
-	if died:
-		return
-	if shooting == false:
+	if shooting == false and died == false:
 		$timer.start()
 		var bullet = Bullet.instance()
 		get_parent().add_child(bullet)
@@ -41,6 +40,7 @@ func die():
 	$collision.set_deferred("disabled", true)
 	$area2d/area_collision.set_deferred("disabled", true)
 	$animation.play("die")
+	$die.play()
 	#yield($animation, "animation_finished")
 	$dir_timer.stop()
 	_spawn_props()
@@ -58,12 +58,20 @@ func _ready():
 	$dir_timer.wait_time = rand_range(3, 5)
 	$timer.start()
 	$dir_timer.start()
-	
+
 func _process(delta):
 	#луч рэйкаста чего-то касается?
 	var target_dis = $raycast.is_colliding()
 	#если да, то флаг активен и можно стрелять
 	if target_dis:
+		
+		var pos = $raycast.get_collision_point()
+		
+		if pos.distance_to(self.global_position) < 25:
+			too_close = true
+		else:
+			too_close = false
+		
 		$atention.visible = true
 		if !save:
 			yield(get_tree().create_timer(0.5), "timeout")
@@ -71,41 +79,45 @@ func _process(delta):
 		shooting = true
 	else:
 		$atention.visible = false
+		too_close = false
 
-var enemy_state = 0
-var nxt_state = 0
+var walk_state = 0
+var nxt_walk = 0
 
 func _physics_process(delta):
 	#задел на хождение enemy
-	#velocity.y = 9.8 * 300
-	if save or shooting or died:
-		enemy_state = 0
-		velocity.x = 0
-	else:
-		if enemy_state == 0 and nxt_state < autoload.time:
-			enemy_state = randi()%2
-			nxt_state = autoload.time + 2
 	
-	if enemy_state == 1:
+	if save or died or shooting or too_close:
+		walk_state = 0
+	else:
+		if nxt_walk < autoload.time:
+			walk_state = randi() % 2
+			nxt_walk = autoload.time + 2
+	
+	var step = rand_range(20, 40)
+	if walk_state == 1:
 		if $sprite.flip_h:
-			velocity.x = -50
+			velocity.x = -step
 		else:
-			velocity.x = 50
+			velocity.x = step
+	else:
+		velocity.x = 0
 	
 	velocity = move_and_slide(velocity)
 	
 	if velocity.length() > 0:
 		$animation.play("idle")
-	
 
 func _save():
 	#enemy прячется
 	if !save:
+		$area2d/area_collision.set_deferred("disabled", true)
 		position.y -= 5
 		$sprite.self_modulate = Color("#393939")
 		save = true
 		#set_physics_process(false)
 	elif save:
+		$area2d/area_collision.set_deferred("disabled", false)
 		position.y += 5
 		$sprite.self_modulate = Color("#ffffff")
 		save = false
