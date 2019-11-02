@@ -5,7 +5,7 @@ signal change_ammo()
 signal change_health()
 signal pickup()
 
-var nums = [7, 8, 9, 10, 11]
+var nums = [7, 8, 9, 10, 11, 12]
 
 export var Bullet : PackedScene
 
@@ -18,6 +18,7 @@ var velocity = Vector2.ZERO
 var shooting = true as bool
 #var direction = 0
 var count = 4
+var health_count = 5
 var area_position = Vector2.ZERO
 var teleports
 var state_machine
@@ -44,6 +45,7 @@ func knockback():
 			new_vector = transform.origin + knock
 			$tween.interpolate_property(self, "position:x", transform.origin.x, new_vector.x, 0.1, $tween.TRANS_LINEAR, $tween.EASE_OUT_IN)
 			$tween.start()
+			health_count -= 1
 			emit_signal("change_health")
 
 func _physics_process(delta):
@@ -139,7 +141,8 @@ func _on_area2d_area_entered(area):
 	if area in teleports:
 		area_position.y = area.position.y
 		
-	if area.is_in_group("health") and count < 5:
+	if area.is_in_group("health") and health_count < 5:
+		health_count = 5
 		emit_signal("pickup")
 		area.die()
 	
@@ -149,6 +152,7 @@ func _on_area2d_area_entered(area):
 		area.die()
 	
 	if area.is_in_group("bullet"):
+		health_count -= 1
 		#$pivot/offset/camera/screenshake.start(0.2, 12.0, 12, 0)
 		emit_signal("change_health")
 		area.die()

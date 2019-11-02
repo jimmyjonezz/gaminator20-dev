@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://script/enemy.gd" type="Script" id=1]
 [ext_resource path="res://sprite/stuff.png" type="Texture" id=2]
@@ -46,6 +46,49 @@ tracks/0/keys = {
 "values": [ 34, 35 ]
 }
 
+[sub_resource type="Animation" id=5]
+resource_name = "run"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 38, 39, 40, 41 ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "die"
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "run"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=9]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=10]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=11]
+
+[sub_resource type="AnimationNodeStateMachine" id=12]
+states/die/node = SubResource( 6 )
+states/die/position = Vector2( 172, 165 )
+states/idle/node = SubResource( 7 )
+states/idle/position = Vector2( 70, 34 )
+states/run/node = SubResource( 8 )
+states/run/position = Vector2( 219, 44 )
+transitions = [ "idle", "run", SubResource( 9 ), "run", "idle", SubResource( 10 ), "idle", "die", SubResource( 11 ) ]
+start_node = "idle"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=13]
+
 [node name="enemy" type="KinematicBody2D" groups=[
 "enemy",
 ]]
@@ -59,7 +102,7 @@ Bullet = ExtResource( 4 )
 texture = ExtResource( 2 )
 vframes = 16
 hframes = 16
-frame = 34
+frame = 41
 
 [node name="collision" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -77,6 +120,13 @@ shape = SubResource( 2 )
 autoplay = "idle"
 anims/die = SubResource( 3 )
 anims/idle = SubResource( 4 )
+anims/run = SubResource( 5 )
+
+[node name="animtree" type="AnimationTree" parent="."]
+tree_root = SubResource( 12 )
+anim_player = NodePath("../animation")
+active = true
+parameters/playback = SubResource( 13 )
 
 [node name="timer" type="Timer" parent="."]
 wait_time = 0.9
@@ -107,8 +157,13 @@ scale = Vector2( 0.519999, 1 )
 [node name="die" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
 bus = "audio"
+
+[node name="rebirth" type="Timer" parent="."]
+wait_time = 60.0
+one_shot = true
 [connection signal="area_entered" from="area2d" to="." method="_on_area2d_area_entered"]
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="dir_timer" to="." method="_on_dir_timer_timeout"]
 [connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="timeout" from="rebirth" to="." method="_on_rebirth_timeout"]

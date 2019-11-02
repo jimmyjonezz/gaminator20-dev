@@ -7,6 +7,7 @@ var save = false
 var nums = [true, false]
 var died = false
 var too_close = false
+var state_machine
 
 onready var props = get_node("../../props")
 
@@ -34,12 +35,13 @@ func shoot() -> void:
 		#emit_signal("shoot")
 		
 func die():
+	state_machine.travel("die")
+	$rebirth.start()
 	died = true
 	$raycast.enabled = false
 	$timer.stop()
 	$collision.set_deferred("disabled", true)
 	$area2d/area_collision.set_deferred("disabled", true)
-	$animation.play("die")
 	$die.play()
 	#yield($animation, "animation_finished")
 	$dir_timer.stop()
@@ -58,6 +60,7 @@ func _ready():
 	$dir_timer.wait_time = rand_range(3, 5)
 	$timer.start()
 	$dir_timer.start()
+	state_machine = $animtree.get("parameters/playback")
 
 func _process(delta):
 	#луч рэйкаста чего-то касается?
@@ -102,10 +105,13 @@ func _physics_process(delta):
 			velocity.x = step
 	else:
 		velocity.x = 0
+		#$animation.play("idle")
 	
 	velocity = move_and_slide(velocity)
 	
 	if velocity.length() > 0:
+		$animation.play("run")
+	elif velocity.length() == 0:
 		$animation.play("idle")
 
 func _save():
@@ -161,6 +167,12 @@ func _on_VisibilityNotifier2D_screen_entered():
 
 func _on_VisibilityNotifier2D_screen_exited():
 	if died:
-		queue_free()
+		pass
+		#queue_free()
 	
 	set_physics_process(false)
+
+func _on_rebirth_timeout():
+	var idx = get_instance_id()
+	get_parent().spawn_enemy(idx)
+	queue_free()
