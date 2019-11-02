@@ -3,6 +3,7 @@ extends KinematicBody2D
 signal shoot()
 signal change_ammo()
 signal change_health()
+signal pickup()
 
 var nums = [7, 8, 9, 10, 11]
 
@@ -105,13 +106,13 @@ func get_input(delta):
 		velocity = Vector2.ZERO
 		#state_machine.travel("idle")
 	
-	if velocity.length() == 0:
-		$animation.play("idle")
-	
 	if velocity.length() > 0:
 		#state_machine.travel("run")
 		$animation.play("run")
-		#$audio.play()
+		
+	elif velocity.length() == 0:
+		$animation.play("idle")
+		#$audio.stop()
 		
 	#emit_signal("moved")
 		
@@ -137,6 +138,10 @@ func _on_timer_timeout():
 func _on_area2d_area_entered(area):
 	if area in teleports:
 		area_position.y = area.position.y
+		
+	if area.is_in_group("health") and count < 5:
+		emit_signal("pickup")
+		area.die()
 	
 	if area.is_in_group("props") and count < 4:
 		count = 4
