@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://script/player.gd" type="Script" id=1]
 [ext_resource path="res://sprite/stuff.png" type="Texture" id=2]
@@ -12,7 +12,58 @@ radius = 3.0
 height = 6.0
 
 [sub_resource type="Animation" id=2]
-resource_name = "fade_in"
+resource_name = "blink"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("head:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("sprite:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0.0705882, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("collision:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("player/collisionarea:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=3]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:modulate")
@@ -39,8 +90,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "fade_out"
+[sub_resource type="Animation" id=4]
 length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:modulate")
@@ -67,7 +117,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:frame")
@@ -94,7 +144,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, -2 ), Vector2( 0, -3 ) ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:frame")
@@ -121,62 +171,63 @@ tracks/1/keys = {
 "values": [ Vector2( 0, -3 ), Vector2( 0, -3 ), Vector2( 0, -2 ) ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=6]
+[sub_resource type="AnimationNodeAnimation" id=7]
 animation = "fade_in"
 
-[sub_resource type="AnimationNodeAnimation" id=7]
+[sub_resource type="AnimationNodeAnimation" id=8]
 animation = "fade_out"
 
-[sub_resource type="AnimationNodeAnimation" id=8]
+[sub_resource type="AnimationNodeAnimation" id=9]
 animation = "idle"
 
-[sub_resource type="AnimationNodeAnimation" id=9]
+[sub_resource type="AnimationNodeAnimation" id=10]
 animation = "run"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=10]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=11]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=12]
-switch_mode = 1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=13]
-switch_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=14]
 switch_mode = 1
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=15]
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
 switch_mode = 2
 
-[sub_resource type="AnimationNodeStateMachine" id=16]
-states/fade_in/node = SubResource( 6 )
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
+switch_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=16]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id=17]
+states/fade_in/node = SubResource( 7 )
 states/fade_in/position = Vector2( 70, 41 )
-states/fade_out/node = SubResource( 7 )
+states/fade_out/node = SubResource( 8 )
 states/fade_out/position = Vector2( 433, 46 )
-states/idle/node = SubResource( 8 )
+states/idle/node = SubResource( 9 )
 states/idle/position = Vector2( 230, 46 )
-states/run/node = SubResource( 9 )
+states/run/node = SubResource( 10 )
 states/run/position = Vector2( 230, 171 )
-transitions = [ "idle", "run", SubResource( 10 ), "run", "idle", SubResource( 11 ), "idle", "fade_out", SubResource( 12 ), "fade_out", "idle", SubResource( 13 ), "idle", "fade_in", SubResource( 14 ), "fade_in", "idle", SubResource( 15 ) ]
+transitions = [ "idle", "run", SubResource( 11 ), "run", "idle", SubResource( 12 ), "idle", "fade_out", SubResource( 13 ), "fade_out", "idle", SubResource( 14 ), "idle", "fade_in", SubResource( 15 ), "fade_in", "idle", SubResource( 16 ) ]
 start_node = "idle"
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=17]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=18]
 
-[sub_resource type="CapsuleShape2D" id=18]
+[sub_resource type="CapsuleShape2D" id=19]
 radius = 4.0
 height = 6.0
 
-[sub_resource type="RectangleShape2D" id=19]
+[sub_resource type="RectangleShape2D" id=20]
 extents = Vector2( 3, 1 )
 
-[sub_resource type="BitmapFont" id=20]
+[sub_resource type="BitmapFont" id=21]
 height = 3.0
 ascent = 25.0
 fallback = ExtResource( 6 )
 
 [node name="player" type="KinematicBody2D"]
 collision_mask = 15
+collision/safe_margin = 90.0
 script = ExtResource( 1 )
 Bullet = ExtResource( 3 )
 
@@ -184,17 +235,16 @@ Bullet = ExtResource( 3 )
 texture = ExtResource( 2 )
 vframes = 16
 hframes = 16
-frame = 2
+frame = 3
 
 [node name="head" type="Sprite" parent="."]
-position = Vector2( 0, -2 )
+position = Vector2( 0, -3 )
 texture = ExtResource( 2 )
 vframes = 16
 hframes = 16
 frame = 7
 
 [node name="collision" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource( 1 )
 
 [node name="pos" type="Position2D" parent="."]
@@ -226,17 +276,18 @@ editor_draw_drag_margin = true
 
 [node name="animation" type="AnimationPlayer" parent="."]
 autoplay = "idle"
-anims/fade_in = SubResource( 2 )
-anims/fade_out = SubResource( 3 )
-anims/idle = SubResource( 4 )
-anims/run = SubResource( 5 )
+anims/blink = SubResource( 2 )
+anims/fade_in = SubResource( 3 )
+anims/fade_out = SubResource( 4 )
+anims/idle = SubResource( 5 )
+anims/run = SubResource( 6 )
 
 [node name="animtree" type="AnimationTree" parent="."]
-tree_root = SubResource( 16 )
+tree_root = SubResource( 17 )
 anim_player = NodePath("../animation")
 active = true
 process_mode = 0
-parameters/playback = SubResource( 17 )
+parameters/playback = SubResource( 18 )
 
 [node name="player" type="Area2D" parent="." groups=[
 "player",
@@ -244,8 +295,7 @@ parameters/playback = SubResource( 17 )
 collision_mask = 5
 
 [node name="collisionarea" type="CollisionShape2D" parent="player"]
-visible = false
-shape = SubResource( 18 )
+shape = SubResource( 19 )
 
 [node name="audio" type="AudioStreamPlayer2D" parent="."]
 bus = "audio"
@@ -255,7 +305,7 @@ bus = "audio"
 [node name="colhead" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2( 0, -4 )
-shape = SubResource( 19 )
+shape = SubResource( 20 )
 
 [node name="press" type="Label" parent="."]
 visible = false
@@ -264,7 +314,7 @@ margin_top = -17.0
 margin_right = 21.0
 margin_bottom = -10.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 21 )
 text = "Oooops!"
 uppercase = true
 __meta__ = {
@@ -273,3 +323,4 @@ __meta__ = {
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="player" to="." method="_on_area2d_area_entered"]
 [connection signal="area_exited" from="player" to="." method="_on_area2d_area_exited"]
+[connection signal="body_entered" from="player" to="." method="_on_player_body_entered"]
