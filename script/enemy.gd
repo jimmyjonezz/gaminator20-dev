@@ -61,6 +61,7 @@ func _ready():
 	$timer.start()
 	$dir_timer.start()
 	state_machine = $animtree.get("parameters/playback")
+	set_physics_process(false)
 
 func _process(delta):
 	#луч рэйкаста чего-то касается?
@@ -118,12 +119,14 @@ func _save():
 	#enemy прячется
 	if !save:
 		$area2d/area_collision.set_deferred("disabled", true)
+		#$collision.set_deferred("disabled", true)
 		position.y -= 5
 		$sprite.self_modulate = Color("#393939")
 		save = true
 		#set_physics_process(false)
 	elif save:
 		$area2d/area_collision.set_deferred("disabled", false)
+		#$collision.set_deferred("disabled", false)
 		position.y += 5
 		$sprite.self_modulate = Color("#ffffff")
 		save = false
@@ -164,13 +167,6 @@ func _on_dir_timer_timeout():
 
 func _on_VisibilityNotifier2D_screen_entered():
 	set_physics_process(true)
-
-func _on_VisibilityNotifier2D_screen_exited():
-	if died:
-		pass
-		#queue_free()
-	
-	set_physics_process(false)
 
 func _on_rebirth_timeout():
 	var idx = get_instance_id()

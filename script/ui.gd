@@ -35,8 +35,9 @@ func _input(event):
 	if event.is_action_pressed("ui_accept"):
 		if get_tree().paused:
 			get_tree().set_pause(false)
-			assert(get_tree().reload_current_scene() == OK)
+			get_tree().reload_current_scene()
 			$winner.visible = false
+			$esc.visible = false
 		
 	if event.is_action_pressed("fullscreen"):
 		OS.window_fullscreen = !OS.window_fullscreen
@@ -74,14 +75,12 @@ func player_die():
 	$lose.play()
 	over = true
 	$winner/winner_text.text = "GAME OVER"
-	var new_pause_state = not get_tree().paused
-	get_tree().paused = new_pause_state
+	get_tree().paused = true
 	$winner.visible = true
 
 func _on_door_win():
 	win = true
-	var new_pause_state = not get_tree().paused
-	get_tree().paused = new_pause_state
+	get_tree().paused = true
 	$winner.visible = true
 
 func _on_activate_activate(value):

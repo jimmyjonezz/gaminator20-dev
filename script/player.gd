@@ -36,21 +36,19 @@ func _ready():
 	teleports = get_node("../teleport").get_children()
 	state_machine = $animtree.get("parameters/playback")
 	
-func knockback():
+func knockback(area):
 	var knock = Vector2.ZERO
 	var new_vector = Vector2.ZERO
-	for body in $player.get_overlapping_bodies():
-		if body.is_in_group("enemy"):
-			knock = (transform.origin - body.transform.origin) * 1.6
-			new_vector = transform.origin + knock
-			$tween.interpolate_property(self, "position:x", transform.origin.x, new_vector.x, 0.1, $tween.TRANS_LINEAR, $tween.EASE_OUT_IN)
-			$tween.start()
-			health_count -= 1
-			emit_signal("change_health")
+	
+	knock = (transform.origin - area.transform.origin) * 2.5
+	new_vector = transform.origin + knock
+	$tween.interpolate_property(self, "position:x", transform.origin.x, new_vector.x, 0.1, $tween.TRANS_LINEAR, $tween.EASE_OUT_IN)
+	$tween.start()
+	health_count -= 1
+	emit_signal("change_health")
 
 func _physics_process(delta):
 	get_input(delta)
-	knockback()
 	
 func _input(event):
 	if event.is_action_pressed("enter"):
@@ -173,3 +171,7 @@ func _on_ui_shooting(signal_state, value):
 func _on_area2d_area_exited(area):
 	if area in teleports:
 		direction = 0
+
+func _on_player_body_entered(body):
+	if body.is_in_group("enemy"):
+		knockback(body)

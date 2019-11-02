@@ -251,7 +251,7 @@ direction = -48
 direction = 0
 
 [node name="key1" parent="stuff" instance=ExtResource( 9 )]
-position = Vector2( 1640, 96 )
+position = Vector2( 536, 238 )
 
 [node name="fire" parent="stuff" instance=ExtResource( 3 )]
 position = Vector2( 143, 132 )
@@ -511,7 +511,6 @@ scale = Vector2( 3, 3 )
 transform = Transform2D( 3, 0, 0, 3, 0, 0 )
 
 [node name="fps" type="Label" parent="ui"]
-visible = false
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 39.0
