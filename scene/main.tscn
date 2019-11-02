@@ -251,7 +251,7 @@ direction = -48
 direction = 0
 
 [node name="key1" parent="stuff" instance=ExtResource( 9 )]
-position = Vector2( 536, 238 )
+position = Vector2( 1640, 96 )
 
 [node name="fire" parent="stuff" instance=ExtResource( 3 )]
 position = Vector2( 143, 132 )
@@ -464,6 +464,9 @@ position = Vector2( 1650, 142 )
 [node name="enemy51" parent="enemy" instance=ExtResource( 7 )]
 position = Vector2( 1630, 142 )
 
+[node name="enemy52" parent="enemy" instance=ExtResource( 7 )]
+position = Vector2( 1450, 142 )
+
 [node name="name" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -508,6 +511,7 @@ scale = Vector2( 3, 3 )
 transform = Transform2D( 3, 0, 0, 3, 0, 0 )
 
 [node name="fps" type="Label" parent="ui"]
+visible = false
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 39.0
