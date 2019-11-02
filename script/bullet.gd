@@ -38,4 +38,3 @@ func _layer_off():
 func _on_bullet_body_entered(body):
 	if body.is_in_group("wall"):
 		die()
-
