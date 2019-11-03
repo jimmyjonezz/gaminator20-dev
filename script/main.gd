@@ -2,6 +2,7 @@ tool
 extends Node2D
 
 onready var camera = $player/pivot/offset/camera as Camera2D
+onready var shader = get_node("ui").get_children()
 
 var exit_door_spawn = [Vector2(424, 142), Vector2(1208, 142), 
 		Vector2(1448, 238), Vector2(1784, 382), Vector2(88, 334)]
@@ -25,10 +26,11 @@ func set_camera_limits() -> void:
 	camera.limit_top = map_limits.position.y * map_cellsize.y
 	camera.limit_bottom = map_limits.end.y * map_cellsize.y
 
+#вырубаем шейдеры
 func _on_shader_time_timeout():
-	$ui/hromatic.visible = false
-	$ui/post_processing_shader.visible = false
-	$ui/shader_swirl.visible = false
+	for x in shader:
+		if x as TextureRect:
+			x.visible = false
 
 func _on_key1_pickup():
 	var spawn_door_point = exit_door_spawn[randi() % exit_door_spawn.size()]
