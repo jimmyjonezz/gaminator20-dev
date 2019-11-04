@@ -1,4 +1,4 @@
-# gaminator20-dev
+# Not a Dungeon / Gaminator #20
  
 ## Controls: 
 * Press <kbd>X</kbd>: - shoot
