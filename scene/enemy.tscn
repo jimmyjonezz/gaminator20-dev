@@ -26,13 +26,24 @@ tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
-"update": 0,
+"update": 1,
 "values": [ 36, 37 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("sprite/head:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Vector2( 1, 1 ), Vector2( 5, 8 ) ]
 }
 
 [sub_resource type="Animation" id=4]
 length = 0.6
-loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:frame")
 tracks/0/interp = 1
@@ -44,6 +55,18 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 34, 35 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("sprite/head:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -1 ) ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -60,6 +83,18 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 38, 39, 40, 41 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("sprite/head:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Vector2( 1, 0 ) ]
 }
 
 [sub_resource type="AnimationNodeAnimation" id=6]
@@ -104,7 +139,16 @@ vframes = 16
 hframes = 16
 frame = 35
 
+[node name="head" type="Sprite" parent="sprite"]
+visible = false
+position = Vector2( 0, -1 )
+texture = ExtResource( 2 )
+vframes = 16
+hframes = 16
+frame = 42
+
 [node name="collision" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 1 )
 
 [node name="area2d" type="Area2D" parent="." groups=[
@@ -114,6 +158,7 @@ collision_layer = 2
 collision_mask = 4
 
 [node name="area_collision" type="CollisionShape2D" parent="area2d"]
+visible = false
 shape = SubResource( 2 )
 
 [node name="animation" type="AnimationPlayer" parent="."]
@@ -152,6 +197,7 @@ __meta__ = {
 }
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+visible = false
 scale = Vector2( 0.519999, 1 )
 
 [node name="die" type="AudioStreamPlayer" parent="."]

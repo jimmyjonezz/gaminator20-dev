@@ -62,7 +62,7 @@ func _input(event):
 			state_machine.travel("fade_in")
 			$animation.play("fade_in")
 			yield($animation, "animation_finished")
-			move = not move
+			move = true
 			return
 		
 		if !save:

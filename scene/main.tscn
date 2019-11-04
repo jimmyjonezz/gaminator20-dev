@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://script/main.gd" type="Script" id=1]
 [ext_resource path="res://sprite/pixel.png" type="Texture" id=2]
@@ -207,9 +207,6 @@ shader_param/size_y = 0.005
 [sub_resource type="Shader" id=19]
 code = "shader_type canvas_item;
 
-// Source - https://godotengine.org/asset-library/asset/122
-
-// #8b6867
 uniform vec4 color : hint_color;
 
 void fragment() {
@@ -221,11 +218,58 @@ void fragment() {
 	//v*=v;
 	COLOR.rgb = color.rgb*v;
 
-}"
+}
+"
 
 [sub_resource type="ShaderMaterial" id=20]
 shader = SubResource( 19 )
 shader_param/color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="Shader" id=21]
+code = "shader_type canvas_item;
+
+uniform vec2 vector = vec2(320, 240);
+uniform float param = 0.3;
+
+float dither4x4(vec2 position, float brightness) {
+  int x = int(mod(position.x, 4.0));
+  int y = int(mod(position.y, 4.0));
+  int index = x + y * 4;
+  float limit = 0.0;
+
+  if (x < 8) {
+    if (index == 0) limit = 0.0625;
+    if (index == 1) limit = 0.5625;
+    if (index == 2) limit = 0.1875;
+    if (index == 3) limit = 0.6875;
+    if (index == 4) limit = 0.8125;
+    if (index == 5) limit = 0.3125;
+    if (index == 6) limit = 0.9375;
+    if (index == 7) limit = 0.4375;
+    if (index == 8) limit = 0.25;
+    if (index == 9) limit = 0.75;
+    if (index == 10) limit = 0.125;
+    if (index == 11) limit = 0.625;
+    if (index == 12) limit = 1.0;
+    if (index == 13) limit = 0.5;
+    if (index == 14) limit = 0.875;
+    if (index == 15) limit = 0.375;
+  }
+	if (brightness < limit) brightness = 0.0;
+	return brightness;
+}
+
+void fragment() {
+	vec4 color = texture(SCREEN_TEXTURE, SCREEN_UV);
+	vec3 lume = vec3(.5, .5, .3);
+	float luma = dot(color.rgb, lume);
+	COLOR = vec4(vec3(dither4x4(vector * UV, param), luma, .1), 1.0);
+}"
+
+[sub_resource type="ShaderMaterial" id=22]
+shader = SubResource( 21 )
+shader_param/vector = Vector2( 320, 240 )
+shader_param/param = 0.42
 
 [node name="main" type="Node2D"]
 use_parent_material = true
@@ -675,6 +719,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="kills" type="Label" parent="ui"]
+anchor_right = 1.0
+margin_top = 5.0
+margin_right = -645.0
+custom_fonts/font = SubResource( 2 )
+text = "FPS"
+align = 2
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="shader_time" type="Timer" parent="ui"]
 wait_time = 25.0
 one_shot = true
@@ -770,6 +826,17 @@ __meta__ = {
 [node name="sepia" type="TextureRect" parent="ui"]
 visible = false
 material = SubResource( 20 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="ui"]
+visible = false
+material = SubResource( 22 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )

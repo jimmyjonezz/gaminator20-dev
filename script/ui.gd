@@ -2,6 +2,7 @@ extends CanvasLayer
 
 signal shooting()
 
+var kills_count
 var ammo_count = 4
 var count = 4
 var health_count = 5
@@ -14,6 +15,8 @@ onready var shader_time = get_node("shader_time")
 var shader_array : Array
 
 func _ready():
+	kills_count = 0
+	$kills.text = "KILLS: %05d" % [kills_count]
 	for x in shader:
 		if x as TextureRect:
 			shader_array.push_back(x)
@@ -21,6 +24,10 @@ func _ready():
 	randomize()
 	$esc.visible = false
 	$winner.visible = false
+	
+func kills():
+	kills_count += 1
+	$kills.text = "KILLS: %05d" % [kills_count]
 	
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
