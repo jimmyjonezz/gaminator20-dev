@@ -46,3 +46,8 @@ anims/idle = SubResource( 2 )
 [node name="pickup" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 bus = "audio"
+
+[node name="die" type="Timer" parent="."]
+wait_time = 90.0
+one_shot = true
+[connection signal="timeout" from="die" to="." method="_on_die_timeout"]

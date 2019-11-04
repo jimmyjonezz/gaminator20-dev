@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+#signal died()
+
 export var Ammo : PackedScene
 export var Bullet: PackedScene
 var shooting = false
@@ -35,15 +37,16 @@ func shoot() -> void:
 		#emit_signal("shoot")
 		
 func die():
-	state_machine.travel("die")
-	$rebirth.start()
 	died = true
+	$"../../ui".kills()
+	$animation.play("die")
+	set_physics_process(false)
+	$rebirth.start()
 	$raycast.enabled = false
 	$timer.stop()
 	$collision.set_deferred("disabled", true)
 	$area2d/area_collision.set_deferred("disabled", true)
 	$die.play()
-	#yield($animation, "animation_finished")
 	$dir_timer.stop()
 	_spawn_props()
 	#queue_free()
@@ -53,6 +56,7 @@ func _ready():
 	#случайное направление влево или вправо
 	var dir = nums[randi() % nums.size()]
 	if dir:
+		$sprite/head.visible = false
 		_rotation()
 	#случайное значение шкалы времени для анимации idle
 	$animation.seek(rand_range(0, 0.6))
@@ -89,6 +93,8 @@ var walk_state = 0
 var nxt_walk = 0
 
 func _physics_process(delta):
+	if died:
+		return
 	#задел на хождение enemy
 	
 	if save or died or shooting or too_close:
@@ -122,6 +128,7 @@ func _save():
 		#$collision.set_deferred("disabled", true)
 		position.y -= 5
 		$sprite.self_modulate = Color("#393939")
+		$sprite/head.self_modulate = Color("#393939")
 		save = true
 		#set_physics_process(false)
 	elif save:
@@ -129,6 +136,7 @@ func _save():
 		#$collision.set_deferred("disabled", false)
 		position.y += 5
 		$sprite.self_modulate = Color("#ffffff")
+		$sprite/head.self_modulate = Color("#ffffff")
 		save = false
 		#set_physics_process(true)
 	
@@ -146,6 +154,7 @@ func _on_timer_timeout():
 func _rotation():
 	#enemy смотрит то в одну, то в другую сторону
 	$sprite.flip_h = not $sprite.flip_h
+	$sprite/head.flip_h = not $sprite/head.flip_h
 	$raycast.rotation += PI
 
 	#$pos для спавна пули - стрельба
