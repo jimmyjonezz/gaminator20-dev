@@ -1,4 +1,4 @@
-# Not a Dungeon / Gaminator #20
+# Not a Dungeon / ![Gaminator #20](https://gamin.me/entries/723)
  
 ## Controls: 
 * Press <kbd>X</kbd>: - shoot
