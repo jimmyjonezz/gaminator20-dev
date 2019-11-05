@@ -12,9 +12,15 @@ var too_close = false
 var state_machine
 
 onready var props = get_node("../../props")
+onready var tiles = get_node("../../map").get_child(1)
 
 #export (int) var speed = 2000
 var velocity = Vector2.ZERO
+
+func in_map():
+	var tpos = tiles.world_to_map(get_global_position())
+	var itile = tiles.get_cellv(Vector2(tpos.x, tpos.y + 1))
+	return itile
 
 func _on_area2d_area_entered(area):
 	if area.enemy == true:
@@ -105,6 +111,15 @@ func _physics_process(delta):
 			nxt_walk = autoload.time + 2
 	
 	var step = rand_range(20, 40)
+	
+	var tiles = in_map()
+	if tiles == 40 or tiles == -1:
+		walk_state = 0
+		if $sprite.flip_h:
+			velocity.x = -step
+		else:
+			velocity.x = step
+	
 	if walk_state == 1:
 		if $sprite.flip_h:
 			velocity.x = -step

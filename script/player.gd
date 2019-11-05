@@ -59,10 +59,11 @@ func knockback(area):
 
 func _physics_process(delta):
 	get_input(delta)
+	
 	if shake_time > autoload.time:
-		shake_lerp = lerp(shake_lerp, 1, delta*10)
+		shake_lerp = lerp(shake_lerp, 1, delta * 10)
 	else:
-		shake_lerp = lerp(shake_lerp, 0, delta*10)
+		shake_lerp = lerp(shake_lerp, 0, delta * 10)
 	
 	camera.offset.x = (rand_range(-shake_power, shake_power))*shake_lerp
 	camera.offset.y = (rand_range(-shake_power, shake_power))*shake_lerp
@@ -136,6 +137,8 @@ func get_input(delta):
 	velocity = move_and_slide(velocity * delta)
 
 func shoot() -> void:
+	if not move:
+		return
 	if count > 0:
 		shooting = false
 		
