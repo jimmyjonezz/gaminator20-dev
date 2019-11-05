@@ -1,67 +1,14 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://script/player.gd" type="Script" id=1]
 [ext_resource path="res://sprite/stuff.png" type="Texture" id=2]
 [ext_resource path="res://scene/bullet.tscn" type="PackedScene" id=3]
 [ext_resource path="res://script/pivot.gd" type="Script" id=4]
 [ext_resource path="res://font/tinyfont.fnt" type="BitmapFont" id=6]
-[ext_resource path="res://scene/screenshake/screenshake.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 3.0
 height = 6.0
-
-[sub_resource type="Animation" id=2]
-resource_name = "blink"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/path = NodePath("head:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("sprite:self_modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 0, 0.0705882, 1 ), Color( 1, 1, 1, 1 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("collision:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ true, false ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("player/collisionarea:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ true, false ]
-}
 
 [sub_resource type="Animation" id=3]
 length = 0.4
@@ -91,7 +38,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=4]
-length = 0.6
+length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:modulate")
 tracks/0/interp = 1
@@ -272,11 +219,8 @@ drag_margin_right = 0.1
 drag_margin_bottom = 0.1
 editor_draw_drag_margin = true
 
-[node name="screenshake" parent="pivot/offset/camera" instance=ExtResource( 7 )]
-
 [node name="animation" type="AnimationPlayer" parent="."]
 autoplay = "idle"
-anims/blink = SubResource( 2 )
 anims/fade_in = SubResource( 3 )
 anims/fade_out = SubResource( 4 )
 anims/idle = SubResource( 5 )

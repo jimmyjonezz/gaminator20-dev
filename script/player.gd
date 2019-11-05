@@ -25,6 +25,12 @@ var state_machine
 var save = false as bool
 var move = true
 
+var shake_time = 0
+var shake_power = 0
+var shake_lerp = 0
+
+onready var camera = $pivot/offset/camera
+
 func set_dir(value : int):
 	if value != 0:
 		direction = value
@@ -35,7 +41,11 @@ func _ready():
 	direction = 0
 	teleports = get_node("../teleport").get_children()
 	state_machine = $animtree.get("parameters/playback")
-	
+
+func shake_screen(duration, power):
+	shake_time = autoload.time + duration
+	shake_power = power
+
 func knockback(area):
 	var knock = Vector2.ZERO
 	var new_vector = Vector2.ZERO
@@ -49,6 +59,14 @@ func knockback(area):
 
 func _physics_process(delta):
 	get_input(delta)
+	
+	if shake_time > autoload.time:
+		shake_lerp = lerp(shake_lerp, 1, delta * 10)
+	else:
+		shake_lerp = lerp(shake_lerp, 0, delta * 10)
+	
+	camera.offset.x = (rand_range(-shake_power, shake_power))*shake_lerp
+	camera.offset.y = (rand_range(-shake_power, shake_power))*shake_lerp
 	
 func _input(event):
 	if event.is_action_pressed("enter"):
@@ -119,8 +137,13 @@ func get_input(delta):
 	velocity = move_and_slide(velocity * delta)
 
 func shoot() -> void:
+	if not move:
+		return
 	if count > 0:
 		shooting = false
+		
+		shake_screen(0.1, 3)
+		
 		$timer.start()
 		var bullet = Bullet.instance()
 		get_parent().add_child(bullet)
@@ -152,6 +175,7 @@ func _on_area2d_area_entered(area):
 	if area.is_in_group("bullet"):
 		health_count -= 1
 		#$pivot/offset/camera/screenshake.start(0.2, 12.0, 12, 0)
+		shake_screen(0.1, 3)
 		emit_signal("change_health")
 		area.die()
 		var knock = (transform.origin - area.transform.origin) * 2
