@@ -88,7 +88,6 @@ hromatic={
 [rendering]
 
 quality/driver/fallback_to_gles2=true
-quality/2d/gles2_use_nvidia_rect_flicker_workaround=true
 quality/2d/use_pixel_snap=true
 vram_compression/import_etc=true
 vram_compression/import_etc2=false

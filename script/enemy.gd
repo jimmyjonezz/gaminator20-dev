@@ -10,12 +10,14 @@ var nums = [true, false]
 var died = false
 var too_close = false
 var state_machine
+var hard = false
 
-onready var props = get_node("../../props")
-onready var tiles = get_node("../../map").get_child(1)
+onready var props = get_node("../../../props")
+onready var tiles = get_node("../../../map").get_child(1)
 
 #export (int) var speed = 2000
 var velocity = Vector2.ZERO
+var rand_dis = 30
 
 func in_map():
 	var tpos = tiles.world_to_map(get_global_position())
@@ -30,21 +32,25 @@ func _on_area2d_area_entered(area):
 		die()
 		
 func shoot() -> void:
+	var bullet_count = 1
+	if hard:
+		bullet_count = 2
 	if shooting == false and died == false:
 		$timer.start()
-		var bullet = Bullet.instance()
-		get_parent().add_child(bullet)
-		
-		var rot = get_rotation()
-		if $sprite.flip_h:
-			rot += PI
-		
-		bullet.start($pos.global_position, rot)
-		#emit_signal("shoot")
+		for i in range(bullet_count):
+			var bullet = Bullet.instance()
+			
+			var rot = get_rotation()
+			if $sprite.flip_h:
+				rot += PI
+			
+			bullet.start($pos.global_position, rot)
+			get_parent().add_child(bullet)
+			yield(get_tree().create_timer(0.1), "timeout")
 		
 func die():
 	died = true
-	$"../../ui".kills()
+	$"../../../ui".kills()
 	$animation.play("die")
 	set_physics_process(false)
 	$rebirth.start()
@@ -59,6 +65,7 @@ func die():
 	
 func _ready():
 	randomize()
+	rand_dis = rand_range(30, 35)
 	#случайное направление влево или вправо
 	var dir = nums[randi() % nums.size()]
 	if dir:
@@ -81,15 +88,17 @@ func _process(delta):
 		
 		var pos = $raycast.get_collision_point()
 		
-		if pos.distance_to(self.global_position) < 25:
+		if pos.distance_to(self.global_position) < rand_dis:
 			too_close = true
 		else:
 			too_close = false
 		
 		$atention.visible = true
+
 		if !save:
-			yield(get_tree().create_timer(0.5), "timeout")
+			yield(get_tree().create_timer(0.3), "timeout")
 			shoot()
+			
 		shooting = true
 	else:
 		$atention.visible = false
@@ -110,15 +119,18 @@ func _physics_process(delta):
 			walk_state = randi() % 2
 			nxt_walk = autoload.time + 2
 	
-	var step = rand_range(20, 40)
+	var step = rand_range(10, 40)
 	
-	var tiles = in_map()
-	if tiles == 40 or tiles == -1:
+	var tile_in_map = in_map()
+	if tile_in_map == 50 or tile_in_map == -1:
 		walk_state = 0
 		if $sprite.flip_h:
-			velocity.x = -step
-		else:
-			velocity.x = step
+			if step:
+				velocity.x = -step
+				walk_state = 1
+			else:
+				velocity.x = step
+				walk_state = 1
 	
 	if walk_state == 1:
 		if $sprite.flip_h:
@@ -140,7 +152,7 @@ func _save():
 	#enemy прячется
 	if !save:
 		$area2d/area_collision.set_deferred("disabled", true)
-		#$collision.set_deferred("disabled", true)
+		$collision.set_deferred("disabled", true)
 		position.y -= 5
 		$sprite.self_modulate = Color("#393939")
 		$sprite/head.self_modulate = Color("#393939")
@@ -148,7 +160,7 @@ func _save():
 		#set_physics_process(false)
 	elif save:
 		$area2d/area_collision.set_deferred("disabled", false)
-		#$collision.set_deferred("disabled", false)
+		$collision.set_deferred("disabled", false)
 		position.y += 5
 		$sprite.self_modulate = Color("#ffffff")
 		$sprite/head.self_modulate = Color("#ffffff")
@@ -156,7 +168,7 @@ func _save():
 		#set_physics_process(true)
 	
 func _spawn_props():
-	#после смерти спавним патроны
+	#после смерти спавним патроны в "props"
 	var ammo = Ammo.instance()
 	ammo.set_position(global_position)
 	props.call_deferred("add_child", ammo)
@@ -193,6 +205,7 @@ func _on_VisibilityNotifier2D_screen_entered():
 	set_physics_process(true)
 
 func _on_rebirth_timeout():
+	hard = true
 	var idx = get_instance_id()
-	get_parent().spawn_enemy(idx)
+	get_node("../../../enemys").spawn_enemy(idx, hard)
 	queue_free()

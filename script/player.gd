@@ -84,6 +84,7 @@ func _input(event):
 			return
 		
 		if !save:
+			move = false
 			position.y -= 5
 			$sprite.self_modulate = Color("#393939")
 			$head.self_modulate = Color("#393939")
@@ -91,35 +92,40 @@ func _input(event):
 			#$collision.set_deferred("disabled", true)
 			save = true
 			state_machine.travel("idle")
-			set_physics_process(false)
+			#set_physics_process(false)
 		elif save:
+			move = true
 			position.y += 5
 			$sprite.self_modulate = Color("#ffffff")
 			$head.self_modulate = Color("#ffffff")
 			$player/collisionarea.set_deferred("disabled", false)
 			#$collision.set_deferred("disabled", false)
 			save = false
-			set_physics_process(true)
+			#set_physics_process(true)
 
 func get_input(delta):
 	if Input.is_action_just_pressed("fire"):
 		if shooting:
 			shoot()
 		
-	if Input.is_action_pressed("ui_right") and move:
-		velocity.x += speed
+	if Input.is_action_pressed("ui_right"):
 		$sprite.flip_h = false
 		$head.flip_h = false
 		$pivot/offset.position.x = 60
 		$pos.position.x = 7
 		look_direction = Vector2(1, 0)
-	elif Input.is_action_pressed("ui_left") and move:
-		velocity.x -= speed
+		if move:
+			velocity.x += speed
+		
+	elif Input.is_action_pressed("ui_left"):
 		$sprite.flip_h = true
 		$head.flip_h = true
 		$pivot/offset.position.x = 60
 		$pos.position.x = -7
 		look_direction = Vector2(-1, 0)
+		if move:
+			velocity.x -= speed
+		
 	else:
 		velocity = Vector2.ZERO
 		#state_machine.travel("idle")
@@ -139,6 +145,7 @@ func get_input(delta):
 func shoot() -> void:
 	if not move:
 		return
+	
 	if count > 0:
 		shooting = false
 		
@@ -173,6 +180,7 @@ func _on_area2d_area_entered(area):
 		area.die()
 	
 	if area.is_in_group("bullet"):
+		$die_shoot.play()
 		health_count -= 1
 		#$pivot/offset/camera/screenshake.start(0.2, 12.0, 12, 0)
 		shake_screen(0.1, 3)
