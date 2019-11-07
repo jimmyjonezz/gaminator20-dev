@@ -1,14 +1,42 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://script/player.gd" type="Script" id=1]
 [ext_resource path="res://sprite/stuff.png" type="Texture" id=2]
 [ext_resource path="res://scene/bullet.tscn" type="PackedScene" id=3]
 [ext_resource path="res://script/pivot.gd" type="Script" id=4]
+[ext_resource path="res://sound/sfx_movement_dooropen2.wav" type="AudioStream" id=5]
 [ext_resource path="res://font/tinyfont.fnt" type="BitmapFont" id=6]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 3.0
 height = 6.0
+
+[sub_resource type="Animation" id=2]
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("head:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=3]
 length = 0.4
@@ -22,7 +50,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 0 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("head:modulate")
@@ -34,37 +62,10 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 0 ) ]
 }
 
 [sub_resource type="Animation" id=4]
-length = 0.4
-tracks/0/type = "value"
-tracks/0/path = NodePath("sprite:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.4 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 0 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("head:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.4 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 0 ) ]
-}
-
-[sub_resource type="Animation" id=5]
 length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:frame")
@@ -91,7 +92,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, -2 ), Vector2( 0, -3 ) ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=5]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("sprite:frame")
@@ -118,56 +119,56 @@ tracks/1/keys = {
 "values": [ Vector2( 0, -3 ), Vector2( 0, -3 ), Vector2( 0, -2 ) ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=7]
+[sub_resource type="AnimationNodeAnimation" id=6]
 animation = "fade_in"
 
-[sub_resource type="AnimationNodeAnimation" id=8]
+[sub_resource type="AnimationNodeAnimation" id=7]
 animation = "fade_out"
 
-[sub_resource type="AnimationNodeAnimation" id=9]
+[sub_resource type="AnimationNodeAnimation" id=8]
 animation = "idle"
 
-[sub_resource type="AnimationNodeAnimation" id=10]
+[sub_resource type="AnimationNodeAnimation" id=9]
 animation = "run"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=10]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=11]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=12]
+switch_mode = 1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=13]
-switch_mode = 1
+switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=14]
-switch_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=15]
 switch_mode = 1
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=16]
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
 switch_mode = 2
 
-[sub_resource type="AnimationNodeStateMachine" id=17]
-states/fade_in/node = SubResource( 7 )
+[sub_resource type="AnimationNodeStateMachine" id=16]
+states/fade_in/node = SubResource( 6 )
 states/fade_in/position = Vector2( 70, 41 )
-states/fade_out/node = SubResource( 8 )
+states/fade_out/node = SubResource( 7 )
 states/fade_out/position = Vector2( 433, 46 )
-states/idle/node = SubResource( 9 )
+states/idle/node = SubResource( 8 )
 states/idle/position = Vector2( 230, 46 )
-states/run/node = SubResource( 10 )
+states/run/node = SubResource( 9 )
 states/run/position = Vector2( 230, 171 )
-transitions = [ "idle", "run", SubResource( 11 ), "run", "idle", SubResource( 12 ), "idle", "fade_out", SubResource( 13 ), "fade_out", "idle", SubResource( 14 ), "idle", "fade_in", SubResource( 15 ), "fade_in", "idle", SubResource( 16 ) ]
+transitions = [ "idle", "run", SubResource( 10 ), "run", "idle", SubResource( 11 ), "idle", "fade_out", SubResource( 12 ), "fade_out", "idle", SubResource( 13 ), "idle", "fade_in", SubResource( 14 ), "fade_in", "idle", SubResource( 15 ) ]
 start_node = "idle"
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=18]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=17]
 
-[sub_resource type="CapsuleShape2D" id=19]
+[sub_resource type="CapsuleShape2D" id=18]
 radius = 4.0
 height = 6.0
 
-[sub_resource type="RectangleShape2D" id=20]
+[sub_resource type="RectangleShape2D" id=19]
 extents = Vector2( 3, 1 )
 
-[sub_resource type="BitmapFont" id=21]
+[sub_resource type="BitmapFont" id=20]
 height = 3.0
 ascent = 25.0
 fallback = ExtResource( 6 )
@@ -221,17 +222,17 @@ editor_draw_drag_margin = true
 
 [node name="animation" type="AnimationPlayer" parent="."]
 autoplay = "idle"
-anims/fade_in = SubResource( 3 )
-anims/fade_out = SubResource( 4 )
-anims/idle = SubResource( 5 )
-anims/run = SubResource( 6 )
+anims/fade_in = SubResource( 2 )
+anims/fade_out = SubResource( 3 )
+anims/idle = SubResource( 4 )
+anims/run = SubResource( 5 )
 
 [node name="animtree" type="AnimationTree" parent="."]
-tree_root = SubResource( 17 )
+tree_root = SubResource( 16 )
 anim_player = NodePath("../animation")
 active = true
 process_mode = 0
-parameters/playback = SubResource( 18 )
+parameters/playback = SubResource( 17 )
 
 [node name="player" type="Area2D" parent="." groups=[
 "player",
@@ -239,9 +240,13 @@ parameters/playback = SubResource( 18 )
 collision_mask = 5
 
 [node name="collisionarea" type="CollisionShape2D" parent="player"]
-shape = SubResource( 19 )
+shape = SubResource( 18 )
 
 [node name="audio" type="AudioStreamPlayer2D" parent="."]
+bus = "audio"
+
+[node name="die_shoot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
 bus = "audio"
 
 [node name="tween" type="Tween" parent="."]
@@ -249,7 +254,7 @@ bus = "audio"
 [node name="colhead" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2( 0, -4 )
-shape = SubResource( 20 )
+shape = SubResource( 19 )
 
 [node name="press" type="Label" parent="."]
 visible = false
@@ -258,7 +263,7 @@ margin_top = -17.0
 margin_right = 21.0
 margin_bottom = -10.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 21 )
+custom_fonts/font = SubResource( 20 )
 text = "Oooops!"
 uppercase = true
 __meta__ = {

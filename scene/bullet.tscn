@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://sprite/stuff.png" type="Texture" id=1]
 [ext_resource path="res://script/bullet.gd" type="Script" id=2]
-[ext_resource path="res://sound/sfx_damage_hit3.wav" type="AudioStream" id=3]
 [ext_resource path="res://sound/sfx_weapon_singleshot15.wav" type="AudioStream" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -27,15 +26,7 @@ frame = 1
 shape = SubResource( 1 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
-scale = Vector2( 0.2, 0.2 )
-
-[node name="timer" type="Timer" parent="."]
-wait_time = 0.5
-autostart = true
-
-[node name="die" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 3 )
-bus = "audio"
+scale = Vector2( 0.1, 0.1 )
 
 [node name="shoot" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
@@ -43,4 +34,4 @@ bus = "audio"
 [connection signal="area_entered" from="." to="." method="_on_bullet_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_bullet_body_entered"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
-[connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
+[connection signal="viewport_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_viewport_exited"]

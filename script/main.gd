@@ -1,4 +1,3 @@
-tool
 extends Node2D
 
 onready var camera = $player/pivot/offset/camera as Camera2D
