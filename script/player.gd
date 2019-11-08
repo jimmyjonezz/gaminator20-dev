@@ -30,6 +30,12 @@ var shake_power = 0
 var shake_lerp = 0
 
 onready var camera = $pivot/offset/camera
+onready var tiles = get_node("../map").get_child(1)
+
+func in_map():
+	var tpos = tiles.world_to_map(get_global_position())
+	var itile = tiles.get_cellv(Vector2(tpos.x, tpos.y + 1))
+	return itile
 
 func set_dir(value : int):
 	if value != 0:
@@ -81,6 +87,10 @@ func _input(event):
 			$animation.play("fade_in")
 			yield($animation, "animation_finished")
 			move = true
+			return
+		
+		var number_tile = in_map()
+		if number_tile == -1 or number_tile == 26:
 			return
 		
 		if !save:

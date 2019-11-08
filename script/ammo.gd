@@ -11,3 +11,9 @@ func die():
 
 func _on_die_timeout():
 	queue_free()
+
+func _on_VisibilityNotifier2D_screen_entered():
+	set_process(true)
+
+func _on_VisibilityNotifier2D_screen_exited():
+	set_process(false)
