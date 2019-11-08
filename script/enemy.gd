@@ -107,6 +107,8 @@ func _process(delta):
 var walk_state = 0
 var nxt_walk = 0
 
+var on_wall = false
+
 func _physics_process(delta):
 	if died:
 		return
@@ -116,21 +118,26 @@ func _physics_process(delta):
 		walk_state = 0
 	else:
 		if nxt_walk < autoload.time:
-			walk_state = randi() % 2
-			nxt_walk = autoload.time + 2
+			var tile_in_map = in_map()
+			if tile_in_map == -1 and not on_wall:
+				_rotation()
+				on_wall = true
+				walk_state = 1
+				nxt_walk = autoload.time + 5
+			elif tile_in_map != -1:
+				walk_state = randi() % 2
+				nxt_walk = autoload.time + 2
+				on_wall = false
 	
 	var step = rand_range(10, 40)
 	
-	var tile_in_map = in_map()
-	if tile_in_map == 40 or tile_in_map == -1:
-		walk_state = 0
-		if $sprite.flip_h:
-			if step:
-				velocity.x = -step
-				walk_state = 1
-			else:
-				velocity.x = step
-				walk_state = 1
+		#if $sprite.flip_h:
+		#	if step:
+		#		velocity.x = -step
+		#		walk_state = 1
+		#	else:
+		#		velocity.x = step
+		#		walk_state = 1
 	
 	if walk_state == 1:
 		if $sprite.flip_h:
@@ -150,6 +157,8 @@ func _physics_process(delta):
 
 func _save():
 	#enemy прячется
+	if nxt_walk > autoload.time:
+		return
 	if !save:
 		$area2d/area_collision.set_deferred("disabled", true)
 		$collision.set_deferred("disabled", true)
