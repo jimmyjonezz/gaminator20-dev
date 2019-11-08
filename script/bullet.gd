@@ -2,8 +2,10 @@ extends Area2D
 
 var speed = 250
 var enemy = false
+#var screen_size = Vector2.ZERO
 
 func _ready():
+	#screen_size = get_viewport_rect().size
 	$shoot.play()
 	#в этом случаем смотрим кто родитель пули
 	#если нода ysort (контейнер enemys), то вырубаем слой
@@ -24,6 +26,8 @@ func _on_VisibilityNotifier2D_screen_exited():
 	
 func _physics_process(delta):
 	position += Vector2(speed, 0).rotated(rotation) * delta
+	
+	#position.x = clamp(position.x, 0, screen_size.x)
 
 func _on_bullet_area_entered(area):
 	if area.is_in_group("enemy") and !enemy:
@@ -35,6 +39,6 @@ func _layer_off():
 func _on_bullet_body_entered(body):
 	if body.is_in_group("wall"):
 		queue_free()
-
-func _on_VisibilityNotifier2D_viewport_exited(viewport):
-	queue_free()
+		
+	if body.is_in_group("props"):
+		body.die()

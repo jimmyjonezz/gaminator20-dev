@@ -122,7 +122,7 @@ func _physics_process(delta):
 	var step = rand_range(10, 40)
 	
 	var tile_in_map = in_map()
-	if tile_in_map == 50 or tile_in_map == -1:
+	if tile_in_map == 40 or tile_in_map == -1:
 		walk_state = 0
 		if $sprite.flip_h:
 			if step:
