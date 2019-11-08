@@ -15,7 +15,7 @@
 [ext_resource path="res://sound/sfx_movement_dooropen2.wav" type="AudioStream" id=13]
 [ext_resource path="res://sound/dungeons.ogg" type="AudioStream" id=14]
 [ext_resource path="res://script/enemy_scene.gd" type="Script" id=15]
-[ext_resource path="res://font/font/font.fnt" type="BitmapFont" id=16]
+[ext_resource path="res://font/cyrillic/font.fnt" type="BitmapFont" id=16]
 [ext_resource path="res://scene/barrel.tscn" type="PackedScene" id=17]
 
 [sub_resource type="BitmapFont" id=1]
