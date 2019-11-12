@@ -4,6 +4,7 @@ extends KinematicBody2D
 
 export var Ammo : PackedScene
 export var Bullet: PackedScene
+export (bool) var debug = false
 var shooting = false
 var save = false
 var nums = [true, false]
@@ -37,7 +38,7 @@ func shoot() -> void:
 		bullet_count = 2
 	if shooting == false and died == false:
 		$timer.start()
-		for i in range(bullet_count):
+		for i in bullet_count:
 			var bullet = Bullet.instance()
 			
 			var rot = get_rotation()
@@ -121,17 +122,24 @@ func _physics_process(delta):
 	
 	var step = rand_range(10, 40)
 	
+		#if $sprite.flip_h:
+		#	if step:
+		#		velocity.x = -step
+		#		walk_state = 1
+		#	else:
+		#		velocity.x = step
+		#		walk_state = 1
+		
 	var tile_in_map = in_map()
-	if tile_in_map == 40 or tile_in_map == -1:
-		walk_state = 0
-		if $sprite.flip_h:
-			if step:
-				velocity.x = -step
-				walk_state = 1
-			else:
-				velocity.x = step
-				walk_state = 1
-	
+	#если равен пустому тайлу
+	if tile_in_map == -1:
+		walk_state = 1
+		_rotation()
+		nxt_walk = autoload.time + 15
+		if debug:
+			printt("name: %s, walk_state: %s, tile_in_map: %s, next_walk: %s" % 
+					[name, walk_state, tile_in_map, nxt_walk])
+			
 	if walk_state == 1:
 		if $sprite.flip_h:
 			velocity.x = -step
@@ -150,6 +158,8 @@ func _physics_process(delta):
 
 func _save():
 	#enemy прячется
+	if nxt_walk > autoload.time:
+		return
 	if !save:
 		$area2d/area_collision.set_deferred("disabled", true)
 		$collision.set_deferred("disabled", true)
