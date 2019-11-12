@@ -9,7 +9,7 @@ var health_count = 5
 var win = false
 var over = false
 
-onready var shader = get_children()
+onready var shader = get_node("../shaders/control").get_children()
 onready var fps = get_node("fps")
 onready var shader_time = get_node("shader_time")
 var shader_array : Array
@@ -87,6 +87,7 @@ func player_die():
 
 func _on_door_win():
 	win = true
+	$winner/winner_text.text = "WINNER"
 	get_tree().paused = true
 	$winner.visible = true
 

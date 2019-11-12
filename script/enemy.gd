@@ -4,6 +4,7 @@ extends KinematicBody2D
 
 export var Ammo : PackedScene
 export var Bullet: PackedScene
+export (bool) var debug = false
 var shooting = false
 var save = false
 var nums = [true, false]
@@ -107,8 +108,6 @@ func _process(delta):
 var walk_state = 0
 var nxt_walk = 0
 
-var on_wall = false
-
 func _physics_process(delta):
 	if died:
 		return
@@ -118,16 +117,8 @@ func _physics_process(delta):
 		walk_state = 0
 	else:
 		if nxt_walk < autoload.time:
-			var tile_in_map = in_map()
-			if tile_in_map == -1 and not on_wall:
-				_rotation()
-				on_wall = true
-				walk_state = 1
-				nxt_walk = autoload.time + 5
-			elif tile_in_map != -1:
-				walk_state = randi() % 2
-				nxt_walk = autoload.time + 2
-				on_wall = false
+			walk_state = randi() % 2
+			nxt_walk = autoload.time + 2
 	
 	var step = rand_range(10, 40)
 	
@@ -138,7 +129,16 @@ func _physics_process(delta):
 		#	else:
 		#		velocity.x = step
 		#		walk_state = 1
-	
+	var tile_in_map = in_map()
+	#если равен пустому тайлу
+	if tile_in_map == -1:
+		walk_state = 1
+		_rotation()
+		nxt_walk = autoload.time + 15
+		if debug:
+			printt("name: %s, walk_state: %s, tile_in_map: %s, next_walk: %s" % 
+					[name, walk_state, tile_in_map, nxt_walk])
+			
 	if walk_state == 1:
 		if $sprite.flip_h:
 			velocity.x = -step

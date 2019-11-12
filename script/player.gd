@@ -151,7 +151,6 @@ func get_input(delta):
 	#emit_signal("moved")
 		
 	velocity = move_and_slide(velocity * delta)
-	print(in_map())
 
 func shoot() -> void:
 	if not move:
