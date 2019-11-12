@@ -38,7 +38,7 @@ func shoot() -> void:
 		bullet_count = 2
 	if shooting == false and died == false:
 		$timer.start()
-		for i in range(bullet_count):
+		for i in bullet_count:
 			var bullet = Bullet.instance()
 			
 			var rot = get_rotation()
@@ -129,6 +129,7 @@ func _physics_process(delta):
 		#	else:
 		#		velocity.x = step
 		#		walk_state = 1
+		
 	var tile_in_map = in_map()
 	#если равен пустому тайлу
 	if tile_in_map == -1:
