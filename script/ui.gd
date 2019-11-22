@@ -3,6 +3,7 @@ extends CanvasLayer
 signal shooting()
 
 var kills_count
+var shaders_count = 0
 var ammo_count = 4
 var count = 4
 var health_count = 5
@@ -92,6 +93,8 @@ func _on_door_win():
 	$winner.visible = true
 
 func _on_activate_activate(value):
+	shaders_count += 1
+	$shaders.text = "%s/8" % shaders_count
 	shader_time.stop()
 	for x in shader_array.size():
 		shader_array[x].visible = false

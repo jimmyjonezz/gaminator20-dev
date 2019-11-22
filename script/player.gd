@@ -203,7 +203,7 @@ func _on_area2d_area_entered(area):
 		
 	if area.is_in_group("activate"):
 		$press.visible = true
-		yield(get_tree().create_timer(1), "timeout")
+		yield(get_tree().create_timer(2), "timeout")
 		$press.visible = false
 
 func _on_ui_shooting(signal_state, value):
