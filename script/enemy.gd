@@ -15,6 +15,7 @@ var hard = false
 
 onready var props = get_node("../../../props")
 onready var tiles = get_node("../../../map").get_child(1)
+onready var key = get_node("../../../ui/key")
 
 #export (int) var speed = 2000
 var velocity = Vector2.ZERO
@@ -34,8 +35,9 @@ func _on_area2d_area_entered(area):
 		
 func shoot() -> void:
 	var bullet_count = 1
+	var bullet_speed = 250
 	if hard:
-		bullet_count = 2
+		bullet_speed = 300
 	if shooting == false and died == false:
 		$timer.start()
 		for i in bullet_count:
@@ -45,9 +47,10 @@ func shoot() -> void:
 			if $sprite.flip_h:
 				rot += PI
 			
+			bullet.speed = bullet_speed
 			bullet.start($pos.global_position, rot)
 			get_parent().add_child(bullet)
-			yield(get_tree().create_timer(0.1), "timeout")
+			yield(get_tree().create_timer(0.7), "timeout")
 		
 func die():
 	died = true
@@ -215,7 +218,9 @@ func _on_VisibilityNotifier2D_screen_entered():
 	set_physics_process(true)
 
 func _on_rebirth_timeout():
-	hard = true
-	var idx = get_instance_id()
-	get_node("../../../enemys").spawn_enemy(idx, hard)
-	queue_free()
+	if key.visible:
+		hard = true
+		var idx = get_instance_id()
+		get_node("../../../enemys").spawn_enemy(idx, hard)
+		$rebirth.stop()
+		queue_free()

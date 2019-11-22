@@ -1,6 +1,6 @@
 extends Area2D
 
-var speed = 250
+export var speed = 250
 var enemy = false
 #var screen_size = Vector2.ZERO
 

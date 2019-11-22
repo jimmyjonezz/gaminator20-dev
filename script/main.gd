@@ -21,6 +21,13 @@ func _ready():
 	var spawn_key_point = key_spawn[randi() % key_spawn.size()]
 	$stuff/key1.position = spawn_key_point
 	printt("position key:", spawn_key_point)
+	
+	#заводим массив с позициями enemy - на будущее
+	var spawn_enemy = get_node("enemys/ysort").get_children()
+	var sd = []
+	for x in spawn_enemy:
+		var m = "Vector2%s" % x.position
+		sd.push_back(m)
 
 func set_camera_limits() -> void:
 	#берем границы tilemap - back
@@ -41,6 +48,7 @@ func _on_shader_time_timeout():
 
 #взяли ключ? тогда меняем позицию двери установив в одну из случайных позиций
 func _on_key1_pickup():
+	$ui/key.visible = true
 	var spawn_door_point = exit_door_spawn[randi() % exit_door_spawn.size()]
 	$stuff/door.position = spawn_door_point
 	printt("position door:", spawn_door_point)
