@@ -9,6 +9,7 @@ var count = 4
 var health_count = 5
 var win = false
 var over = false
+var timer = 26
 
 onready var shader = get_node("../shaders/control").get_children()
 onready var fps = get_node("fps")
@@ -102,8 +103,12 @@ func _on_activate_activate(value):
 	var m = shader_array[value]
 	m.visible = true
 	shader_time.start()
+	$timer.visible = true
 
 func _process(delta):
+	if $timer.visible:
+		timer -= delta
+		$timer.text = "0:%02d"% round(timer)
 	fps.text = "FPS: " + str(Engine.get_frames_per_second())
 
 func _on_player_pickup():
