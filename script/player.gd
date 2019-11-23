@@ -5,7 +5,7 @@ signal change_ammo()
 signal change_health()
 signal pickup()
 
-var nums = [7, 8, 9, 10, 11, 12]
+var nums = [7, 8, 9, 10, 11, 12, 13]
 
 export var Bullet : PackedScene
 

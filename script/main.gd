@@ -42,6 +42,9 @@ func set_camera_limits() -> void:
 
 #вырубаем шейдеры
 func _on_shader_time_timeout():
+	$ui/timer.visible = false
+	get_node("ui").timer = 26
+	
 	for x in shader:
 		if x as TextureRect:
 			x.visible = false
