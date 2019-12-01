@@ -57,3 +57,13 @@ func _on_key1_pickup():
 	printt("position door:", spawn_door_point)
 	yield(get_tree().create_timer(0.5),"timeout")
 	$sound/door.play()
+	
+func tween_animate():
+	var start_color = Color(1.0, 1.0, 1.0, 1.0)
+	var end_color = Color(1.0, 1.0, 1.0, 0.0)
+	$tween.interpolate_property($name, "modulate", start_color, end_color, 2.0, $tween.TRANS_LINEAR, $tween.EASE_IN)
+	if not $tween.is_active():
+		$tween.start()
+
+func _on_tween_animate_timeout():
+	tween_animate()
