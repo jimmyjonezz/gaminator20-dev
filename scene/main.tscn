@@ -729,6 +729,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="tween" type="Tween" parent="."]
+
+[node name="tween_animate" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
+autostart = true
+
 [node name="props" type="Node2D" parent="."]
 
 [node name="barrel" parent="props" instance=ExtResource( 17 )]
@@ -1016,5 +1023,6 @@ bus = "back"
 [connection signal="change_health" from="player" to="ui" method="_on_player_change_health"]
 [connection signal="pickup" from="player" to="ui" method="_on_player_pickup"]
 [connection signal="shoot" from="player" to="ui" method="_on_player_shoot"]
+[connection signal="timeout" from="tween_animate" to="." method="_on_tween_animate_timeout"]
 [connection signal="shooting" from="ui" to="player" method="_on_ui_shooting" binds= [ true ]]
 [connection signal="timeout" from="ui/shader_time" to="." method="_on_shader_time_timeout"]

@@ -121,7 +121,7 @@ func _physics_process(delta):
 	else:
 		if nxt_walk < autoload.time:
 			walk_state = randi() % 2
-			nxt_walk = autoload.time + 2
+			nxt_walk = autoload.time + 2 + delta
 	
 	var step = rand_range(10, 40)
 	
