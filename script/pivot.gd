@@ -8,5 +8,5 @@ func _update_pivot():
 func _ready():
 	_update_pivot()
 	
-func _physics_process(delta):
+func _process(delta):
 	_update_pivot()

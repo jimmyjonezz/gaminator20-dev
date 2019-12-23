@@ -6,14 +6,6 @@
 [ext_resource path="res://font/tinyfont.fnt" type="BitmapFont" id=4]
 [ext_resource path="res://sound/sfx_sounds_falling6.wav" type="AudioStream" id=5]
 
-[sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 1 )
-region = Rect2( 48, 22, 16, 3 )
-
-[sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 1 )
-region = Rect2( 65, 23, 28, 1 )
-
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 1 )
 region = Rect2( 0, 16, 16, 4 )
@@ -21,6 +13,14 @@ region = Rect2( 0, 16, 16, 4 )
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 1 )
 region = Rect2( 0, 20, 16, 4 )
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 48, 22, 16, 3 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 65, 23, 28, 1 )
 
 [sub_resource type="BitmapFont" id=5]
 height = 20.0
@@ -84,15 +84,39 @@ __meta__ = {
 }
 
 [node name="hbox_left" type="HBoxContainer" parent="margin"]
-margin_right = 148.0
 margin_bottom = 16.0
+size_flags_horizontal = 3
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="health" type="Sprite" parent="margin/hbox_left"]
+position = Vector2( 158, 0.25 )
+texture = ExtResource( 1 )
+centered = false
+vframes = 16
+hframes = 16
+frame = 17
+
+[node name="health_progress" type="TextureProgress" parent="margin/hbox_left/health"]
+margin_left = 16.0
+margin_top = 6.0
+margin_right = 32.0
+margin_bottom = 10.0
+max_value = 5.0
+value = 5.0
+texture_under = SubResource( 3 )
+texture_progress = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="blank" type="Control" parent="margin/hbox_left"]
+margin_bottom = 16.0
+
 [node name="ammo" type="Sprite" parent="margin/hbox_left"]
-position = Vector2( 128, 0 )
+position = Vector2( 138, 0.25 )
 texture = ExtResource( 1 )
 centered = false
 vframes = 16
@@ -113,10 +137,10 @@ __meta__ = {
 }
 
 [node name="vbox" type="VBoxContainer" parent="margin"]
-margin_left = 114.0
-margin_top = 13.75
-margin_right = 142.0
-margin_bottom = 15.75
+margin_left = 124.0
+margin_top = 14.0
+margin_right = 152.0
+margin_bottom = 16.0
 size_flags_horizontal = 5
 alignment = 2
 __meta__ = {
@@ -131,37 +155,6 @@ size_flags_vertical = 3
 max_value = 16.0
 value = 16.0
 texture_progress = SubResource( 2 )
-
-[node name="hbox_right" type="HBoxContainer" parent="margin"]
-margin_left = 148.0
-margin_right = 232.0
-margin_bottom = 16.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="health" type="Sprite" parent="margin/hbox_right"]
-texture = ExtResource( 1 )
-centered = false
-vframes = 16
-hframes = 16
-frame = 17
-
-[node name="health_progress" type="TextureProgress" parent="margin/hbox_right/health"]
-margin_left = 16.0
-margin_top = 6.0
-margin_right = 32.0
-margin_bottom = 10.0
-max_value = 5.0
-value = 5.0
-texture_under = SubResource( 3 )
-texture_progress = SubResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="blank" type="Control" parent="margin/hbox_right"]
-margin_bottom = 16.0
 
 [node name="esc" type="Control" parent="."]
 pause_mode = 2
