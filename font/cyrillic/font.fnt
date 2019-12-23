@@ -56,3 +56,7 @@ char id=43 x=45 y=27 width=9 height=9 xoffset=0    yoffset=0     xadvance=6     
 char id=34 x=54 y=27 width=9 height=9 xoffset=0    yoffset=0     xadvance=6     page=0  chnl=15 letter="""
 char id=61 x=63 y=27 width=9 height=9 xoffset=0    yoffset=0     xadvance=6     page=0  chnl=15 letter="="
 char id=45 x=72 y=27 width=9 height=9 xoffset=0    yoffset=0     xadvance=6     page=0  chnl=15 letter="-"
+char id=42 x=81 y=27 width=9 height=9 xoffset=0    yoffset=0     xadvance=6     page=0  chnl=15 letter="*"
+char id=35 x=90 y=27 width=9 height=9 xoffset=0    yoffset=0     xadvance=6     page=0  chnl=15 letter="#"
+char id=40 x=90 y=27 width=9 height=9 xoffset=0    yoffset=0     xadvance=6     page=0  chnl=15 letter="("
+char id=41 x=90 y=27 width=9 height=9 xoffset=0    yoffset=0     xadvance=6     page=0  chnl=15 letter=")"

@@ -42,3 +42,6 @@ func _on_bullet_body_entered(body):
 		
 	if body.is_in_group("props"):
 		body.die()
+
+func _on_timer_timeout():
+	die()
