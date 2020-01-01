@@ -6,19 +6,19 @@
 [ext_resource path="res://font/tinyfont.fnt" type="BitmapFont" id=4]
 [ext_resource path="res://sound/sfx_sounds_falling6.wav" type="AudioStream" id=5]
 
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
 region = Rect2( 0, 16, 16, 4 )
 
-[sub_resource type="AtlasTexture" id=4]
+[sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 1 )
 region = Rect2( 0, 20, 16, 4 )
 
-[sub_resource type="AtlasTexture" id=1]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 1 )
 region = Rect2( 48, 22, 16, 3 )
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 1 )
 region = Rect2( 65, 23, 28, 1 )
 
@@ -106,8 +106,8 @@ margin_right = 32.0
 margin_bottom = 10.0
 max_value = 5.0
 value = 5.0
-texture_under = SubResource( 3 )
-texture_progress = SubResource( 4 )
+texture_under = SubResource( 1 )
+texture_progress = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -130,7 +130,7 @@ margin_right = 1.0
 margin_bottom = 10.0
 max_value = 4.0
 value = 4.0
-texture_progress = SubResource( 1 )
+texture_progress = SubResource( 3 )
 fill_mode = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -154,7 +154,7 @@ size_flags_horizontal = 5
 size_flags_vertical = 3
 max_value = 16.0
 value = 16.0
-texture_progress = SubResource( 2 )
+texture_progress = SubResource( 4 )
 
 [node name="esc" type="Control" parent="."]
 pause_mode = 2
