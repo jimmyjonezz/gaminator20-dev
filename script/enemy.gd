@@ -12,6 +12,7 @@ var died = false
 var too_close = false
 var state_machine
 var hard = false
+var frame = 0
 
 onready var props = get_node("../../../props")
 onready var tiles = get_node("../../../map").get_child(1)
@@ -50,7 +51,7 @@ func shoot() -> void:
 			bullet.speed = bullet_speed
 			bullet.start($pos.global_position, rot)
 			get_parent().add_child(bullet)
-			yield(get_tree().create_timer(0.7), "timeout")
+			yield(get_tree().create_timer(0.5), "timeout")
 		
 func die():
 	died = true
@@ -115,42 +116,35 @@ func _physics_process(delta):
 	if died:
 		return
 	#задел на хождение enemy
-	
-	if save or died or shooting or too_close:
-		walk_state = 0
-	else:
-		if nxt_walk < autoload.time:
-			walk_state = randi() % 2
-			nxt_walk = autoload.time + 2 + delta
-	
-	var step = rand_range(10, 40)
-	
-		#if $sprite.flip_h:
-		#	if step:
-		#		velocity.x = -step
-		#		walk_state = 1
-		#	else:
-		#		velocity.x = step
-		#		walk_state = 1
-		
-	var tile_in_map = in_map()
-	#если равен пустому тайлу
-	if tile_in_map == -1:
-		walk_state = 1
-		_rotation()
-		nxt_walk = autoload.time + 15
-		if debug:
-			printt("name: %s, walk_state: %s, tile_in_map: %s, next_walk: %s" % 
-					[name, walk_state, tile_in_map, nxt_walk])
-			
-	if walk_state == 1:
-		if $sprite.flip_h:
-			velocity.x = -step
+	if frame % 3 == 0:
+		if save or died or shooting or too_close:
+			walk_state = 0
 		else:
-			velocity.x = step
-	else:
-		velocity.x = 0
-		#$animation.play("idle")
+			if nxt_walk < autoload.time:
+				walk_state = randi() % 2
+				nxt_walk = autoload.time + 2 + delta
+		
+		var step = rand_range(10, 40)
+			
+		var tile_in_map = in_map()
+		#если равен пустому тайлу
+		if tile_in_map == -1:
+			walk_state = 1
+			_rotation()
+			nxt_walk = autoload.time + 15
+			if debug:
+				printt("name: %s, walk_state: %s, tile_in_map: %s, next_walk: %s" % 
+						[name, walk_state, tile_in_map, nxt_walk])
+
+	
+		if walk_state == 1:
+			if $sprite.flip_h:
+				velocity.x = -step
+			else:
+				velocity.x = step
+		else:
+			velocity.x = 0
+			#$animation.play("idle")
 	
 	velocity = move_and_slide(velocity)
 	
@@ -158,6 +152,8 @@ func _physics_process(delta):
 		$animation.play("run")
 	elif velocity.length() == 0:
 		$animation.play("idle")
+		
+	frame += 1
 
 func _save():
 	#enemy прячется

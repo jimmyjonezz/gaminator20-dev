@@ -73,7 +73,7 @@ func _on_player_change_ammo():
 func _on_player_change_health():
 	count = health_count
 	health_count -=1
-	animate_value($margin/hbox_right/health/health_progress, count, health_count, 0.3)
+	animate_value($margin/hbox_left/health/health_progress, count, health_count, 0.3)
 	yield($tween, "tween_completed")
 	
 	if count < 2:
