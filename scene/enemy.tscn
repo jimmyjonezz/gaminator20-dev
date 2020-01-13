@@ -205,9 +205,10 @@ stream = ExtResource( 5 )
 bus = "audio"
 
 [node name="rebirth" type="Timer" parent="."]
-wait_time = 60.0
+wait_time = 80.0
 [connection signal="area_entered" from="area2d" to="." method="_on_area2d_area_entered"]
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="dir_timer" to="." method="_on_dir_timer_timeout"]
 [connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 [connection signal="timeout" from="rebirth" to="." method="_on_rebirth_timeout"]

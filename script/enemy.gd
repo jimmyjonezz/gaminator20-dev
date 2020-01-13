@@ -13,6 +13,7 @@ var too_close = false
 var state_machine
 var hard = false
 var frame = 0
+var activate
 
 onready var props = get_node("../../../props")
 onready var tiles = get_node("../../../map").get_child(1)
@@ -86,6 +87,9 @@ func _ready():
 	set_physics_process(false)
 
 func _process(delta):
+	if not activate:
+		return
+		
 	#луч рэйкаста чего-то касается?
 	var target_dis = $raycast.is_colliding()
 	#если да, то флаг активен и можно стрелять
@@ -212,6 +216,7 @@ func _on_dir_timer_timeout():
 
 func _on_VisibilityNotifier2D_screen_entered():
 	set_physics_process(true)
+	activate = true
 
 func _on_rebirth_timeout():
 	if key.visible:
@@ -220,3 +225,7 @@ func _on_rebirth_timeout():
 		get_node("../../../enemys").spawn_enemy(idx, hard)
 		$rebirth.stop()
 		queue_free()
+
+func _on_VisibilityNotifier2D_screen_exited():
+	set_physics_process(false)
+	activate = false

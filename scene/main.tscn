@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://script/main.gd" type="Script" id=1]
 [ext_resource path="res://sprite/pixel.png" type="Texture" id=2]
@@ -27,6 +27,56 @@ fallback = ExtResource( 11 )
 [sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;
 
+uniform float precision;
+uniform float hue; 
+
+const mat3 rgb2yiq = mat3(vec3(0.299, 0.587, 0.114), vec3(0.595716, -0.274453, -0.321263), vec3(0.211456, -0.522591, 0.311135)); 
+const mat3 yiq2rgb = mat3(vec3(1.0, 0.9563, 0.6210), vec3(1.0, -0.2721, -0.6474), vec3(1.0, -1.1070, 1.7046)); 
+
+void fragment() {
+	vec3 yColor = rgb2yiq * texture(SCREEN_TEXTURE, SCREEN_UV).rgb;
+	float originalHue = atan(yColor.b, yColor.g);
+	float finalHue = originalHue + hue;
+	float chroma = sqrt(yColor.b * yColor.b+yColor.g * yColor.g);
+	vec3 yFinalColor = vec3(yColor.r, chroma * cos(finalHue), chroma * sin(finalHue));
+	
+	COLOR = vec4(yiq2rgb * yFinalColor, 1.0);
+}"
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
+shader_param/precision = 1.0
+shader_param/hue = 1.0
+
+[sub_resource type="Shader" id=4]
+code = "shader_type canvas_item;
+
+// Source - https://godotengine.org/asset-library/asset/122
+
+uniform float brightness=0.8;
+uniform float contrast=1.5;
+uniform float saturation=1.8;
+
+void fragment() {
+
+	vec3 c = textureLod(SCREEN_TEXTURE,SCREEN_UV,0.0).rgb;
+	
+	c.rgb = mix(vec3(0.0),c.rgb,brightness);
+	c.rgb = mix(vec3(0.5),c.rgb,contrast);
+	c.rgb = mix(vec3(dot(vec3(1.0),c.rgb)*0.33333),c.rgb,saturation);
+	
+	COLOR.rgb=c;
+}"
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 4 )
+shader_param/brightness = 0.8
+shader_param/contrast = 1.5
+shader_param/saturation = 1.8
+
+[sub_resource type="Shader" id=6]
+code = "shader_type canvas_item;
+
 void fragment() {
     vec3 col = -8.0 * texture(SCREEN_TEXTURE, SCREEN_UV).xyz;
     col += texture(SCREEN_TEXTURE, SCREEN_UV + vec2(0.0, SCREEN_PIXEL_SIZE.y)).xyz;
@@ -40,10 +90,10 @@ void fragment() {
     COLOR.xyz = col;
 }"
 
-[sub_resource type="ShaderMaterial" id=3]
-shader = SubResource( 2 )
+[sub_resource type="ShaderMaterial" id=7]
+shader = SubResource( 6 )
 
-[sub_resource type="Shader" id=4]
+[sub_resource type="Shader" id=8]
 code = "shader_type canvas_item;
 
 // Source - https://godotengine.org/asset-library/asset/122
@@ -60,11 +110,11 @@ void fragment() {
 	COLOR.rgb= textureLod(SCREEN_TEXTURE,uv,0.0).rgb;
 }"
 
-[sub_resource type="ShaderMaterial" id=5]
-shader = SubResource( 4 )
+[sub_resource type="ShaderMaterial" id=9]
+shader = SubResource( 8 )
 shader_param/rotation = 1.5
 
-[sub_resource type="Shader" id=6]
+[sub_resource type="Shader" id=10]
 code = "shader_type canvas_item;
 
 uniform float size_x=0.005;
@@ -92,8 +142,8 @@ COLOR.rgb = Chromatic_Aberration;
 //COLOR.rgb= textureLod(SCREEN_TEXTURE,uv,0.0).rgb;
 }"
 
-[sub_resource type="ShaderMaterial" id=7]
-shader = SubResource( 6 )
+[sub_resource type="ShaderMaterial" id=11]
+shader = SubResource( 10 )
 shader_param/size_x = 0.001
 shader_param/size_y = 0.001
 shader_param/r_offset_x = -0.003
@@ -103,33 +153,7 @@ shader_param/g_offset_y = 0.0
 shader_param/b_offset_x = 0.003
 shader_param/b_offset_y = 0.0
 
-[sub_resource type="Shader" id=8]
-code = "shader_type canvas_item;
-
-// Source - https://godotengine.org/asset-library/asset/122
-
-uniform float brightness=0.8;
-uniform float contrast=1.5;
-uniform float saturation=1.8;
-
-void fragment() {
-
-	vec3 c = textureLod(SCREEN_TEXTURE,SCREEN_UV,0.0).rgb;
-	
-	c.rgb = mix(vec3(0.0),c.rgb,brightness);
-	c.rgb = mix(vec3(0.5),c.rgb,contrast);
-	c.rgb = mix(vec3(dot(vec3(1.0),c.rgb)*0.33333),c.rgb,saturation);
-	
-	COLOR.rgb=c;
-}"
-
-[sub_resource type="ShaderMaterial" id=9]
-shader = SubResource( 8 )
-shader_param/brightness = 0.8
-shader_param/contrast = 1.5
-shader_param/saturation = 1.8
-
-[sub_resource type="Shader" id=10]
+[sub_resource type="Shader" id=12]
 code = "shader_type canvas_item;
 
 // Source - https://godotengine.org/asset-library/asset/122
@@ -141,10 +165,10 @@ void fragment() {
 	COLOR.rgb=c;
 }"
 
-[sub_resource type="ShaderMaterial" id=11]
-shader = SubResource( 10 )
+[sub_resource type="ShaderMaterial" id=13]
+shader = SubResource( 12 )
 
-[sub_resource type="Shader" id=12]
+[sub_resource type="Shader" id=14]
 code = "shader_type canvas_item;
 
 // Source - https://godotengine.org/asset-library/asset/122
@@ -163,12 +187,12 @@ void fragment() {
 	COLOR.rgb=c;
 }"
 
-[sub_resource type="ShaderMaterial" id=13]
-shader = SubResource( 12 )
+[sub_resource type="ShaderMaterial" id=15]
+shader = SubResource( 14 )
 shader_param/frequency = 60.0
 shader_param/depth = 0.005
 
-[sub_resource type="Shader" id=14]
+[sub_resource type="Shader" id=16]
 code = "shader_type canvas_item;
 
 // Source - https://godotengine.org/asset-library/asset/122
@@ -179,10 +203,10 @@ void fragment() {
 	COLOR.rgb=c;
 }"
 
-[sub_resource type="ShaderMaterial" id=15]
-shader = SubResource( 14 )
+[sub_resource type="ShaderMaterial" id=17]
+shader = SubResource( 16 )
 
-[sub_resource type="Shader" id=16]
+[sub_resource type="Shader" id=18]
 code = "shader_type canvas_item;
 
 // Source - https://godotengine.org/asset-library/asset/122
@@ -197,12 +221,12 @@ void fragment() {
 	COLOR.rgb= textureLod(SCREEN_TEXTURE,uv,0.0).rgb;
 }"
 
-[sub_resource type="ShaderMaterial" id=17]
-shader = SubResource( 16 )
+[sub_resource type="ShaderMaterial" id=19]
+shader = SubResource( 18 )
 shader_param/size_x = 0.005
 shader_param/size_y = 0.005
 
-[sub_resource type="Shader" id=18]
+[sub_resource type="Shader" id=20]
 code = "shader_type canvas_item;
 
 uniform vec4 color : hint_color;
@@ -219,15 +243,15 @@ void fragment() {
 }
 "
 
-[sub_resource type="ShaderMaterial" id=19]
-shader = SubResource( 18 )
+[sub_resource type="ShaderMaterial" id=21]
+shader = SubResource( 20 )
 shader_param/color = Color( 1, 1, 1, 1 )
 
-[sub_resource type="BitmapFont" id=20]
+[sub_resource type="BitmapFont" id=22]
 height = 5.0
 fallback = ExtResource( 16 )
 
-[sub_resource type="BitmapFont" id=21]
+[sub_resource type="BitmapFont" id=23]
 height = 3.0
 ascent = 26.0
 fallback = ExtResource( 11 )
@@ -590,7 +614,7 @@ position = Vector2( 1300, 94 )
 position = Vector2( 1000, 94 )
 
 [node name="enemy41" parent="enemys/ysort" instance=ExtResource( 7 )]
-position = Vector2( 1067, 190 )
+position = Vector2( 500, 142 )
 
 [node name="enemy42" parent="enemys/ysort" instance=ExtResource( 7 )]
 position = Vector2( 911, 190 )
@@ -644,10 +668,10 @@ position = Vector2( 1650, 526 )
 position = Vector2( 658, 142 )
 
 [node name="enemy46" parent="enemys/ysort" instance=ExtResource( 7 )]
-position = Vector2( 629, 142 )
+position = Vector2( 550, 142 )
 
 [node name="enemy47" parent="enemys/ysort" instance=ExtResource( 7 )]
-position = Vector2( 484, 142 )
+position = Vector2( 400, 142 )
 
 [node name="enemy45" parent="enemys/ysort" instance=ExtResource( 7 )]
 position = Vector2( 800, 142 )
@@ -809,16 +833,7 @@ position = Vector2( 808, 290 )
 
 [node name="shaders" type="CanvasLayer" parent="."]
 
-[node name="control" type="Control" parent="shaders"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="post_processing_shader" type="TextureRect" parent="shaders/control"]
+[node name="hue_shader" type="TextureRect" parent="shaders"]
 visible = false
 material = SubResource( 3 )
 anchor_right = 1.0
@@ -829,7 +844,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="shader_swirl" type="TextureRect" parent="shaders/control"]
+[node name="control" type="Control" parent="shaders"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bcs" type="TextureRect" parent="shaders/control"]
 visible = false
 material = SubResource( 5 )
 anchor_right = 1.0
@@ -840,7 +865,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="hromatic" type="TextureRect" parent="shaders/control"]
+[node name="post_processing_shader" type="TextureRect" parent="shaders/control"]
 visible = false
 material = SubResource( 7 )
 anchor_right = 1.0
@@ -851,7 +876,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="bcs" type="TextureRect" parent="shaders/control"]
+[node name="shader_swirl" type="TextureRect" parent="shaders/control"]
 visible = false
 material = SubResource( 9 )
 anchor_right = 1.0
@@ -862,7 +887,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="contrasted" type="TextureRect" parent="shaders/control"]
+[node name="hromatic" type="TextureRect" parent="shaders/control"]
 visible = false
 material = SubResource( 11 )
 anchor_right = 1.0
@@ -873,7 +898,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="mirage" type="TextureRect" parent="shaders/control"]
+[node name="contrasted" type="TextureRect" parent="shaders/control"]
 visible = false
 material = SubResource( 13 )
 anchor_right = 1.0
@@ -884,7 +909,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="test" type="TextureRect" parent="shaders/control"]
+[node name="mirage" type="TextureRect" parent="shaders/control"]
 visible = false
 material = SubResource( 15 )
 anchor_right = 1.0
@@ -895,7 +920,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="pixelized" type="TextureRect" parent="shaders/control"]
+[node name="test" type="TextureRect" parent="shaders/control"]
 visible = false
 material = SubResource( 17 )
 anchor_right = 1.0
@@ -906,9 +931,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="sepia" type="TextureRect" parent="shaders/control"]
+[node name="pixelized" type="TextureRect" parent="shaders/control"]
 visible = false
 material = SubResource( 19 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="sepia" type="TextureRect" parent="shaders/control"]
+visible = false
+material = SubResource( 21 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
@@ -927,7 +963,7 @@ margin_left = 3.0
 margin_top = 15.0
 margin_right = 202.0
 margin_bottom = 41.0
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 22 )
 text = "абвгдежзийклмнопрстуфхцчшщъыьэюя
  0123456789?'!,.:/+\"=-
 тест,тест=результат!"
@@ -944,7 +980,7 @@ margin_left = 5.0
 margin_top = 5.0
 margin_right = 54.0
 margin_bottom = 13.0
-custom_fonts/font = SubResource( 21 )
+custom_fonts/font = SubResource( 23 )
 text = "FPS"
 uppercase = true
 __meta__ = {
@@ -956,7 +992,7 @@ margin_left = 5.0
 margin_top = 13.0
 margin_right = 17.0
 margin_bottom = 19.0
-custom_fonts/font = SubResource( 21 )
+custom_fonts/font = SubResource( 23 )
 text = "0/8"
 uppercase = true
 __meta__ = {
@@ -966,13 +1002,13 @@ __meta__ = {
 [node name="timer" type="Label" parent="ui"]
 visible = false
 anchor_right = 1.0
-margin_left = 5.0
+margin_left = 26.0
 margin_top = 13.0
 margin_right = -647.0
 margin_bottom = 19.0
 size_flags_horizontal = 7
 size_flags_vertical = 1
-custom_fonts/font = SubResource( 21 )
+custom_fonts/font = SubResource( 23 )
 text = "0:00"
 align = 1
 uppercase = true
@@ -985,7 +1021,7 @@ anchor_right = 1.0
 margin_top = 5.0
 margin_right = -645.0
 margin_bottom = 12.0
-custom_fonts/font = SubResource( 21 )
+custom_fonts/font = SubResource( 23 )
 text = "kills"
 align = 2
 uppercase = true
