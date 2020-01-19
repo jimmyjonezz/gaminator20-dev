@@ -5,7 +5,7 @@
 [ext_resource path="res://scene/bullet.tscn" type="PackedScene" id=3]
 [ext_resource path="res://script/pivot.gd" type="Script" id=4]
 [ext_resource path="res://sound/sfx_movement_dooropen2.wav" type="AudioStream" id=5]
-[ext_resource path="res://font/tinyfont.fnt" type="BitmapFont" id=6]
+[ext_resource path="res://font/font_5x5/font_5x5.fnt" type="BitmapFont" id=6]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 3.0
@@ -259,14 +259,13 @@ shape = SubResource( 19 )
 
 [node name="press" type="Label" parent="."]
 visible = false
-margin_left = -7.0
+margin_left = -13.0
 margin_top = -17.0
-margin_right = 21.0
+margin_right = 40.0
 margin_bottom = -10.0
 rect_scale = Vector2( 0.5, 0.5 )
 custom_fonts/font = SubResource( 20 )
-text = "Oooops!"
-uppercase = true
+text = "oooops!"
 __meta__ = {
 "_edit_use_anchors_": false
 }

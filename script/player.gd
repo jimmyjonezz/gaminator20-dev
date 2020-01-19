@@ -53,6 +53,7 @@ func shake_screen(duration, power):
 	shake_power = power
 
 func knockback(area):
+	save = true
 	var knock = Vector2.ZERO
 	var new_vector = Vector2.ZERO
 	
@@ -62,6 +63,7 @@ func knockback(area):
 	$tween.start()
 	health_count -= 1
 	emit_signal("change_health")
+	save = false
 
 func _physics_process(delta):
 	get_input(delta)

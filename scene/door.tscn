@@ -22,7 +22,7 @@ position = Vector2( 0, -6 )
 texture = ExtResource( 3 )
 vframes = 16
 hframes = 16
-frame = 134
+frame = 131
 
 [node name="right_torch" type="Sprite" parent="."]
 position = Vector2( 16, -6 )
