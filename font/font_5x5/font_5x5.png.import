@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/font.png-5af617d6a423fb81d84a0cac652f6342.stex"
+path="res://.import/font_5x5.png-a180b579f3d72f167200e6ac5d6913a6.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://font/cyrillic/font.png"
-dest_files=[ "res://.import/font.png-5af617d6a423fb81d84a0cac652f6342.stex" ]
+source_file="res://font/font_5x5/font_5x5.png"
+dest_files=[ "res://.import/font_5x5.png-a180b579f3d72f167200e6ac5d6913a6.stex" ]
 
 [params]
 

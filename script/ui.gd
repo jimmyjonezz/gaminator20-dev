@@ -25,7 +25,7 @@ func _ready():
 	
 	randomize()
 	$esc.visible = false
-	$winner.visible = false
+	#$winner.visible = false
 	
 func kills():
 	kills_count += 1
