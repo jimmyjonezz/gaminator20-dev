@@ -53,6 +53,7 @@ func shake_screen(duration, power):
 	shake_power = power
 
 func knockback(area):
+	direction = 0
 	var knock = Vector2.ZERO
 	var new_vector = Vector2.ZERO
 	

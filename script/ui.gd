@@ -18,7 +18,7 @@ var shader_array : Array
 
 func _ready():
 	kills_count = 0
-	$kills.text = "KILLS: %05d" % [kills_count]
+	$kills.text = "kills:%03d" % [kills_count]
 	for x in shader:
 		if x as TextureRect:
 			shader_array.push_back(x)
@@ -29,7 +29,7 @@ func _ready():
 	
 func kills():
 	kills_count += 1
-	$kills.text = "KILLS: %05d" % [kills_count]
+	$kills.text = "kills:%03d" % [kills_count]
 	
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
@@ -83,13 +83,13 @@ func _on_player_change_health():
 func player_die():
 	$lose.play()
 	over = true
-	$winner/winner_text.text = "GAME OVER"
+	$winner/winner_text.text = "game over"
 	get_tree().paused = true
 	$winner.visible = true
 
 func _on_door_win():
 	win = true
-	$winner/winner_text.text = "WINNER"
+	$winner/winner_text.text = "winner!"
 	get_tree().paused = true
 	$winner.visible = true
 
@@ -109,7 +109,7 @@ func _process(delta):
 	if $timer.visible:
 		timer -= delta
 		$timer.text = "0:%02d"% round(timer)
-	fps.text = "FPS: " + str(Engine.get_frames_per_second())
+	fps.text = "fps:" + str(Engine.get_frames_per_second())
 
 func _on_player_pickup():
 	var health = health_count
