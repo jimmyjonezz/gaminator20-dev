@@ -3,7 +3,7 @@
 [ext_resource path="res://sprite/stuff.png" type="Texture" id=1]
 [ext_resource path="res://script/ui.gd" type="Script" id=2]
 [ext_resource path="res://sound/sfx_sounds_pause3_in.wav" type="AudioStream" id=3]
-[ext_resource path="res://font/tinyfont.fnt" type="BitmapFont" id=4]
+[ext_resource path="res://font/font_5x5/font_5x5.fnt" type="BitmapFont" id=4]
 [ext_resource path="res://sound/sfx_sounds_falling6.wav" type="AudioStream" id=5]
 
 [sub_resource type="AtlasTexture" id=1]
@@ -23,10 +23,13 @@ atlas = ExtResource( 1 )
 region = Rect2( 65, 23, 28, 1 )
 
 [sub_resource type="BitmapFont" id=5]
-height = 20.0
+height = 6.0
+ascent = 16.0
 fallback = ExtResource( 4 )
 
 [sub_resource type="BitmapFont" id=6]
+height = 6.0
+ascent = 16.0
 fallback = ExtResource( 4 )
 
 [sub_resource type="Animation" id=7]
@@ -184,10 +187,10 @@ margin_right = -160.0
 margin_bottom = 56.0
 rect_scale = Vector2( 2, 2 )
 custom_fonts/font = SubResource( 5 )
-text = "PAUSE"
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "pause"
 align = 1
 valign = 3
-uppercase = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -199,9 +202,9 @@ anchor_bottom = 0.5
 margin_top = 50.0
 margin_bottom = 58.0
 custom_fonts/font = SubResource( 6 )
-text = "press ESC to continue"
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "press esc to continue"
 align = 1
-uppercase = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -213,9 +216,9 @@ anchor_bottom = 0.5
 margin_top = 58.0
 margin_bottom = 66.0
 custom_fonts/font = SubResource( 6 )
-text = "press ENTER to reload scene"
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "press enter to reload scene"
 align = 1
-uppercase = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -249,13 +252,13 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 margin_top = 36.0
 margin_right = -160.0
-margin_bottom = 56.0
+margin_bottom = 44.0
 rect_scale = Vector2( 2, 2 )
 custom_fonts/font = SubResource( 5 )
-text = "WINNER"
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "winner"
 align = 1
 valign = 3
-uppercase = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -267,9 +270,9 @@ anchor_bottom = 0.5
 margin_top = 50.0
 margin_bottom = 58.0
 custom_fonts/font = SubResource( 6 )
-text = "press ENTER to reload scene"
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "press enter to reload scene"
 align = 1
-uppercase = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -281,9 +284,9 @@ anchor_bottom = 0.5
 margin_top = 58.0
 margin_bottom = 66.0
 custom_fonts/font = SubResource( 6 )
-text = "press ALT + F4 to exit"
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "press alt - f4 to exit"
 align = 1
-uppercase = true
 __meta__ = {
 "_edit_use_anchors_": false
 }

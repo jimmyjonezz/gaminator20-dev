@@ -25,7 +25,7 @@ func _ready():
 	
 	randomize()
 	$esc.visible = false
-	$winner.visible = false
+	#$winner.visible = false
 	
 func kills():
 	kills_count += 1
@@ -114,4 +114,4 @@ func _process(delta):
 func _on_player_pickup():
 	var health = health_count
 	health_count = 5
-	animate_value($margin/hbox_right/health/health_progress, health, health_count, 0.7)
+	animate_value($margin/hbox_left/health/health_progress, health, health_count, 0.7)
