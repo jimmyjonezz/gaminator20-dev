@@ -24,12 +24,12 @@ height = 6.0
 ascent = 16.0
 fallback = ExtResource( 16 )
 
-[sub_resource type="BitmapFont" id=24]
+[sub_resource type="BitmapFont" id=2]
 height = 6.0
 ascent = 16.0
 fallback = ExtResource( 16 )
 
-[sub_resource type="Shader" id=2]
+[sub_resource type="Shader" id=3]
 code = "shader_type canvas_item;
 
 uniform float precision;
@@ -48,12 +48,12 @@ void fragment() {
 	COLOR = vec4(yiq2rgb * yFinalColor, 1.0);
 }"
 
-[sub_resource type="ShaderMaterial" id=3]
-shader = SubResource( 2 )
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 3 )
 shader_param/precision = 1.0
 shader_param/hue = 1.0
 
-[sub_resource type="Shader" id=4]
+[sub_resource type="Shader" id=5]
 code = "shader_type canvas_item;
 
 // Source - https://godotengine.org/asset-library/asset/122
@@ -73,13 +73,13 @@ void fragment() {
 	COLOR.rgb=c;
 }"
 
-[sub_resource type="ShaderMaterial" id=5]
-shader = SubResource( 4 )
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 5 )
 shader_param/brightness = 0.8
 shader_param/contrast = 1.5
 shader_param/saturation = 1.8
 
-[sub_resource type="Shader" id=6]
+[sub_resource type="Shader" id=7]
 code = "shader_type canvas_item;
 
 void fragment() {
@@ -95,10 +95,10 @@ void fragment() {
     COLOR.xyz = col;
 }"
 
-[sub_resource type="ShaderMaterial" id=7]
-shader = SubResource( 6 )
+[sub_resource type="ShaderMaterial" id=8]
+shader = SubResource( 7 )
 
-[sub_resource type="Shader" id=8]
+[sub_resource type="Shader" id=9]
 code = "shader_type canvas_item;
 
 // Source - https://godotengine.org/asset-library/asset/122
@@ -115,11 +115,11 @@ void fragment() {
 	COLOR.rgb= textureLod(SCREEN_TEXTURE,uv,0.0).rgb;
 }"
 
-[sub_resource type="ShaderMaterial" id=9]
-shader = SubResource( 8 )
+[sub_resource type="ShaderMaterial" id=10]
+shader = SubResource( 9 )
 shader_param/rotation = 1.5
 
-[sub_resource type="Shader" id=10]
+[sub_resource type="Shader" id=11]
 code = "shader_type canvas_item;
 
 uniform float size_x=0.005;
@@ -147,8 +147,8 @@ COLOR.rgb = Chromatic_Aberration;
 //COLOR.rgb= textureLod(SCREEN_TEXTURE,uv,0.0).rgb;
 }"
 
-[sub_resource type="ShaderMaterial" id=11]
-shader = SubResource( 10 )
+[sub_resource type="ShaderMaterial" id=12]
+shader = SubResource( 11 )
 shader_param/size_x = 0.001
 shader_param/size_y = 0.001
 shader_param/r_offset_x = -0.003
@@ -158,7 +158,7 @@ shader_param/g_offset_y = 0.0
 shader_param/b_offset_x = 0.003
 shader_param/b_offset_y = 0.0
 
-[sub_resource type="Shader" id=12]
+[sub_resource type="Shader" id=13]
 code = "shader_type canvas_item;
 
 // Source - https://godotengine.org/asset-library/asset/122
@@ -170,10 +170,10 @@ void fragment() {
 	COLOR.rgb=c;
 }"
 
-[sub_resource type="ShaderMaterial" id=13]
-shader = SubResource( 12 )
+[sub_resource type="ShaderMaterial" id=14]
+shader = SubResource( 13 )
 
-[sub_resource type="Shader" id=14]
+[sub_resource type="Shader" id=15]
 code = "shader_type canvas_item;
 
 // Source - https://godotengine.org/asset-library/asset/122
@@ -192,12 +192,12 @@ void fragment() {
 	COLOR.rgb=c;
 }"
 
-[sub_resource type="ShaderMaterial" id=15]
-shader = SubResource( 14 )
+[sub_resource type="ShaderMaterial" id=16]
+shader = SubResource( 15 )
 shader_param/frequency = 60.0
 shader_param/depth = 0.005
 
-[sub_resource type="Shader" id=16]
+[sub_resource type="Shader" id=17]
 code = "shader_type canvas_item;
 
 // Source - https://godotengine.org/asset-library/asset/122
@@ -208,10 +208,10 @@ void fragment() {
 	COLOR.rgb=c;
 }"
 
-[sub_resource type="ShaderMaterial" id=17]
-shader = SubResource( 16 )
+[sub_resource type="ShaderMaterial" id=18]
+shader = SubResource( 17 )
 
-[sub_resource type="Shader" id=18]
+[sub_resource type="Shader" id=19]
 code = "shader_type canvas_item;
 
 // Source - https://godotengine.org/asset-library/asset/122
@@ -226,12 +226,12 @@ void fragment() {
 	COLOR.rgb= textureLod(SCREEN_TEXTURE,uv,0.0).rgb;
 }"
 
-[sub_resource type="ShaderMaterial" id=19]
-shader = SubResource( 18 )
+[sub_resource type="ShaderMaterial" id=20]
+shader = SubResource( 19 )
 shader_param/size_x = 0.005
 shader_param/size_y = 0.005
 
-[sub_resource type="Shader" id=20]
+[sub_resource type="Shader" id=21]
 code = "shader_type canvas_item;
 
 uniform vec4 color : hint_color;
@@ -248,8 +248,8 @@ void fragment() {
 }
 "
 
-[sub_resource type="ShaderMaterial" id=21]
-shader = SubResource( 20 )
+[sub_resource type="ShaderMaterial" id=22]
+shader = SubResource( 21 )
 shader_param/color = Color( 1, 1, 1, 1 )
 
 [sub_resource type="BitmapFont" id=23]
@@ -744,7 +744,7 @@ margin_left = 1076.0
 margin_top = 568.0
 margin_right = 1364.0
 margin_bottom = 608.0
-custom_fonts/font = SubResource( 24 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 1
 custom_constants/shadow_offset_y = 1
@@ -839,7 +839,7 @@ position = Vector2( 808, 290 )
 
 [node name="hue_shader" type="TextureRect" parent="shaders"]
 visible = false
-material = SubResource( 3 )
+material = SubResource( 4 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
@@ -860,7 +860,7 @@ __meta__ = {
 
 [node name="bcs" type="TextureRect" parent="shaders/control"]
 visible = false
-material = SubResource( 5 )
+material = SubResource( 6 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
@@ -871,7 +871,7 @@ __meta__ = {
 
 [node name="post_processing_shader" type="TextureRect" parent="shaders/control"]
 visible = false
-material = SubResource( 7 )
+material = SubResource( 8 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
@@ -882,7 +882,7 @@ __meta__ = {
 
 [node name="shader_swirl" type="TextureRect" parent="shaders/control"]
 visible = false
-material = SubResource( 9 )
+material = SubResource( 10 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
@@ -893,7 +893,7 @@ __meta__ = {
 
 [node name="hromatic" type="TextureRect" parent="shaders/control"]
 visible = false
-material = SubResource( 11 )
+material = SubResource( 12 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
@@ -904,7 +904,7 @@ __meta__ = {
 
 [node name="contrasted" type="TextureRect" parent="shaders/control"]
 visible = false
-material = SubResource( 13 )
+material = SubResource( 14 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
@@ -915,7 +915,7 @@ __meta__ = {
 
 [node name="mirage" type="TextureRect" parent="shaders/control"]
 visible = false
-material = SubResource( 15 )
+material = SubResource( 16 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
@@ -926,7 +926,7 @@ __meta__ = {
 
 [node name="test" type="TextureRect" parent="shaders/control"]
 visible = false
-material = SubResource( 17 )
+material = SubResource( 18 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
@@ -937,7 +937,7 @@ __meta__ = {
 
 [node name="pixelized" type="TextureRect" parent="shaders/control"]
 visible = false
-material = SubResource( 19 )
+material = SubResource( 20 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
@@ -948,7 +948,7 @@ __meta__ = {
 
 [node name="sepia" type="TextureRect" parent="shaders/control"]
 visible = false
-material = SubResource( 21 )
+material = SubResource( 22 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )

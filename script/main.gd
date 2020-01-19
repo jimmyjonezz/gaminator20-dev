@@ -29,7 +29,7 @@ func _ready():
 		var m = "Vector2%s" % x.position
 		sd.push_back(m)
 		
-	#не используется???
+	#не используется!!!???
 
 func set_camera_limits() -> void:
 	#берем границы tilemap - back
